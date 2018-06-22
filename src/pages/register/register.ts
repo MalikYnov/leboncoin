@@ -4,12 +4,13 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 //Providers
-import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
-import {ApiServiceProvider} from '../../providers/api-service/api-service'
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
+import { ApiServiceProvider } from '../../providers/api-service/api-service'
 
 //page
 import { HomePage } from '../home/home';
 import { TabsPage } from '../tabs/tabs';
+import { User } from '../../Models/user';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -28,11 +29,11 @@ export class RegisterPage {
   private isRunning: boolean = false;
   private registerFormVisible: boolean = true;
   private errorMessage: string;
-  
+
   constructor(platform: Platform, public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
-    
-        
+
+
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -53,11 +54,43 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-  registerUser(){
-    if(this.registerForm.value.password != this.registerForm.value.confirmPassword ){
+  registerUser() {
+    if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
       this.errorMessage = "Les 2 mots de passe doivent être identiques !"
-    }else{
-      
+    } else {
+      var user = new User(this.registerForm.value.mail, this.registerForm.value.password)
+      this._authService.registerUser(user).subscribe(
+        data => {
+          var user = this._authService.loginUser(this.registerForm.value.email, this.registerForm.value.password).subscribe(
+            data => {
+              if (data['access_token']) {
+
+                this.nativeStorage.setItem('user', JSON.stringify(data)).then(
+                  () => {
+                    console.log('Stored item!');
+                    this.navCtrl.push(TabsPage);
+                  },
+                  error => console.error('Error storing item', error)
+                );
+              } else {
+                this.errorMessage = "Une erreur c'est produite";
+              }
+            },
+            error => {
+              this.isRunning = false;
+              this.registerFormVisible = true;
+              console.error(error);
+              this.errorMessage = error.error['Message'];
+            }
+          );
+        },
+        error => {
+          this.isRunning = false;
+          this.registerFormVisible = true;
+          console.error(error);
+          this.errorMessage = error.error['Message'];
+        }
+      );
     }
   }
 
