@@ -1,9 +1,9 @@
 export class ConfigUrlApi{
     
-    public delfautUrlApi = "";
+    public delfautUrlApi = "https://leboncoin-manondep.c9users.io/";
     public AdvertForCurrentUserUrlApi:string = ""
-    public AdvertUrlApi:string = ""
+    public AdvertUrlApi:string = "adverts"
     public LoginUrlApi:string = "";
-    public RegisternUrlApi:string = "";
+    public RegisternUrlApi:string = "/users";
     
 }

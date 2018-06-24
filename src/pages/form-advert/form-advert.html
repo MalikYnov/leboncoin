@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>Ajouter une offre</ion-title>
+    <ion-title text-center>Formulaire d'annonce</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
     </div>
   </ng-template>
 
-  <form [formGroup]="dealForm" (ngSubmit)="postDeal()">
+  <form [formGroup]="advertForm" (ngSubmit)="postadvert()">
     <div class="title-section-deal">
       <h6 padding>Informations sur l'annonce</h6>
     </div>
@@ -34,8 +34,9 @@
       </ion-item>
       <ion-item>
         <ion-label stacked>Prix</ion-label>
-        <ion-number formControlName="price" ></ion-number>
+        <ion-input type="number" formControlName="price"></ion-input>
       </ion-item>
+    </ion-list>
 
     <div padding>
       <button offset-1 col-10 type="submit" ion-button center style="background-color:red">{{buttonForm}}</button>
