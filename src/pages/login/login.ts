@@ -11,6 +11,7 @@ import {ApiServiceProvider} from '../../providers/api-service/api-service'
 //page
 import { HomePage } from '../home/home';
 import { TabsPage } from '../tabs/tabs';
+import { RegisterPage } from '../register/register';
 
 
 /**
@@ -31,11 +32,12 @@ export class LoginPage {
   private isRunning: boolean = false;
   private formLoginVisible: boolean = true;
   private errorMessage: string;
+  rootRegisterPage: any;
 
   constructor(platform: Platform, public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
     
-        
+    
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -45,10 +47,12 @@ export class LoginPage {
         () => console.log('noValabe')
       );
     });
+
     this.userForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
+    this.rootRegisterPage = RegisterPage;
   }
 
   onConect() {

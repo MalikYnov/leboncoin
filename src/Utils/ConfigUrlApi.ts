@@ -4,6 +4,6 @@ export class ConfigUrlApi{
     public AdvertForCurrentUserUrlApi:string = ""
     public AdvertUrlApi:string = "adverts"
     public LoginUrlApi:string = "";
-    public RegisternUrlApi:string = "/users";
+    public RegisternUrlApi:string = "https://leboncoin-manondep.c9users.io/users";
     
 }

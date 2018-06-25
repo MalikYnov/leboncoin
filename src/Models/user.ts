@@ -9,6 +9,6 @@ export class User{
 //     @param {String} password - Mot de passe de l'utilisateur
 //     @param {Date} create_at - Date de création
 //    * @param {Date} update_at - Date de mise à jour
-    constructor(public email:string = "", public password:string ="", public pseudo:string = ""){
+    constructor( public pseudo:string = "", public firstname:string = "", public lastname:string = "", public email:string = "", public password:string =""){
     }
 }

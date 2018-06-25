@@ -56,11 +56,13 @@ export class HomePage {
     }
   }
   login(){
-    if(this.idUser == null){
-       this.navCtrl.push(LoginPage);
-    }else{
-      this.navCtrl.push(AccountPage);
-    }
+    // if(this.idUser == null){
+    //    this.navCtrl.push(LoginPage);
+    // }else{
+    //   this.navCtrl.push(AccountPage);
+    // }
+    this.navCtrl.push(LoginPage);
+    
   }
 
   updateAdvert(){

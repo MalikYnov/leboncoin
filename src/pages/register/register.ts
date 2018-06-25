@@ -44,6 +44,9 @@ export class RegisterPage {
       );
     });
     this.registerForm = new FormGroup({
+      pseudo: new FormControl('', Validators.required),
+      firstname: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required)
@@ -58,9 +61,10 @@ export class RegisterPage {
     if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
       this.errorMessage = "Les 2 mots de passe doivent être identiques !"
     } else {
-      var user = new User(this.registerForm.value.mail, this.registerForm.value.password)
+      var user = new User(this.registerForm.value.pseudo,this.registerForm.value.firstname,this.registerForm.value.lastname,this.registerForm.value.email, this.registerForm.value.password)
       this._authService.registerUser(user).subscribe(
         data => {
+          console.log(data);
           var user = this._authService.loginUser(this.registerForm.value.email, this.registerForm.value.password).subscribe(
             data => {
               if (data['access_token']) {

@@ -2,11 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 import {DisplayAdvertPage } from '../pages/display-advert/display-advert';
 import { FormAdvertPage } from '../pages/form-advert/form-advert';
 import { AccountPage } from '../pages/account/account';
@@ -19,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import {UtilsList} from '../Utils/lists-utils';
+import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
 
 
 @NgModule({
@@ -29,11 +32,13 @@ import {UtilsList} from '../Utils/lists-utils';
     LoginPage,
     DisplayAdvertPage,
     FormAdvertPage,
-    AccountPage
+    AccountPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +48,8 @@ import {UtilsList} from '../Utils/lists-utils';
     LoginPage,
     DisplayAdvertPage,
     FormAdvertPage,
-    AccountPage
+    AccountPage,
+    RegisterPage
 
   ],
   providers: [
@@ -53,7 +59,9 @@ import {UtilsList} from '../Utils/lists-utils';
     AuthServiceProvider,
     ApiServiceProvider,
     UtilsList,
-    NativeStorage
+    NativeStorage,
+    HttpClientModule,
+    ConfigUrlApi
   ]
 })
 export class AppModule {}
