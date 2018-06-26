@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController  } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
-import { AlertController } from 'ionic-angular';
 import { Base64 } from '@ionic-native/base64';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -30,7 +29,7 @@ export class FormAdvertPage {
   advertForm: FormGroup;
   pictureURI:string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
-     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64: Base64) {
+     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64: Base64, private toastCtrl: ToastController) {
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
     //   // Here you can do any higher level native things you might need.
@@ -91,26 +90,8 @@ export class FormAdvertPage {
     }).then((imageData) => {
       this.base64.encodeFile(imageData).then((base64File: string) => {
         console.log(base64File);
-        let alert = this.alertCtrl.create({
-          title: 'Choix ce l\'image',
-          // message: 'Do you want to buy this book?',
-          buttons: [
-            {
-              text: base64File,
-    
-              handler: () => {
-                this.openGallery();
-              }
-            },
-            {
-              text: 'Prendre une photo',
-              handler: () => {
-                this.takePic();
-              }
-            }
-          ]
-        });
-        alert.present();
+        this.presentToast(base64File);
+        
         this.pictureURI = base64File;
         
       }, (err) => {
@@ -132,7 +113,7 @@ export class FormAdvertPage {
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }).then((imageData) => {
       this.base64.encodeFile(imageData).then((base64File: string) => {
-        console.log(base64File);
+        this.presentToast(base64File);
         this.pictureURI = base64File;
       }, (err) => {
         console.log(err);
@@ -146,5 +127,19 @@ export class FormAdvertPage {
   }
   deletePicture() {
     this.pictureURI = null;
+  }
+
+  presentToast(img:string) {
+    let toast = this.toastCtrl.create({
+      message: img,
+      duration: 3000,
+      position: 'top'
+    });
+  
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+  
+    toast.present();
   }
 }
