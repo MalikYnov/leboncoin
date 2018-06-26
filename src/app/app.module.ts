@@ -3,6 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HttpClientModule } from '@angular/common/http';
+import { Base64 } from '@ionic-native/base64';
+import { PhotoLibrary } from '@ionic-native/photo-library';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -64,7 +67,10 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
     UtilsList,
     NativeStorage,
     HttpClientModule,
-    ConfigUrlApi
+    ConfigUrlApi,
+    Base64,
+    Camera,
+    PhotoLibrary
   ]
 })
 export class AppModule {}
