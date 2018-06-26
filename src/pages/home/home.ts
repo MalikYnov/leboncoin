@@ -13,6 +13,7 @@ import { FormAdvertPage } from '../form-advert/form-advert';
 import { AccountPage } from '../account/account';
 import { DisplayAdvertPage } from '../display-advert/display-advert';
 
+import * as io from "socket.io-client";
 
 
 @Component({
@@ -24,8 +25,10 @@ export class HomePage {
   listAdvert:Advert[];
   idUser:number = 1;
   token:string = "";
+  socket:any;
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform) {
+    this.connect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
       //   // Here you can do any higher level native things you might need.
@@ -67,6 +70,13 @@ export class HomePage {
   displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
       idAdvert: advert.id
+    });
+  }
+
+  connect() {
+    this.socket = io("https://leboncoin-manondep.c9users.io/adverts");
+    this.socket.on('connect', () => {
+      
     });
   }
 
