@@ -5,6 +5,9 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 //Utils
 import {UtilsList} from '../../Utils/lists-utils'
+import {ConfigUrlApi} from '../../Utils/ConfigUrlApi'
+
+//Models
 import { Advert } from '../../Models/advert';
 
 //Pages
@@ -27,7 +30,7 @@ export class HomePage {
   token:string = "";
   socket:any;
 
-  constructor(public navCtrl: NavController, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform) {
+  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform) {
     this.connect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
@@ -74,9 +77,9 @@ export class HomePage {
   }
 
   connect() {
-    this.socket = io("https://leboncoin-manondep.c9users.io/adverts");
-    this.socket.on('connect', () => {
-      
+    this.socket = io(this.configUrlApi.socketHost);
+    this.socket.on('connect', (msg) => {
+      console.log(msg);
     });
   }
 

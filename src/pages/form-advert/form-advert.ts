@@ -88,6 +88,7 @@ export class FormAdvertPage {
       targetWidth: 350,
       targetHeight: 350,
     }).then((imageData) => {
+      console.log(imageData);
       this.base64.encodeFile(imageData).then((base64File: string) => {
         console.log(base64File);
         this.presentToast(base64File);
