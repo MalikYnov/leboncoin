@@ -91,6 +91,26 @@ export class FormAdvertPage {
     }).then((imageData) => {
       this.base64.encodeFile(imageData).then((base64File: string) => {
         console.log(base64File);
+        let alert = this.alertCtrl.create({
+          title: 'Choix ce l\'image',
+          // message: 'Do you want to buy this book?',
+          buttons: [
+            {
+              text: base64File,
+    
+              handler: () => {
+                this.openGallery();
+              }
+            },
+            {
+              text: 'Prendre une photo',
+              handler: () => {
+                this.takePic();
+              }
+            }
+          ]
+        });
+        alert.present();
         this.pictureURI = base64File;
         
       }, (err) => {
