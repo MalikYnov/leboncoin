@@ -47,6 +47,13 @@ export class ApiServiceProvider {
     let _options = { headers: header };
     return this.http.put(this.configUrlApi.AdvertUrlApi + '/' + advert.id, body ,_options)
   }
+  DeleteAdvert(advert:Advert,token:string):Observable<any>{
+    let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
+    var tokenBearer = 'Bearer ' + token;
+    header = header.append('Authorization',tokenBearer);
+    let _options = { headers: header };
+    return this.http.delete(this.configUrlApi.AdvertUrlApi + '/' + advert.id, _options);
+  }
 
   private serializeObj(obj) {
     var result = [];

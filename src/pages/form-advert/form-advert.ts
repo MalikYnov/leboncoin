@@ -36,7 +36,7 @@ export class FormAdvertPage {
     if( navParams.get('idAdvert')){
       let idAdvert = navParams.get('idAdvert');
       let advert = this.utilsList.ListAdvert[idAdvert];
-      this.pictureURI = advert.picture;
+      this.pictureURI = advert.img;
       this.advertForm = new FormGroup({
         title: new FormControl(advert.title, Validators.required),
         description: new FormControl(advert.description, Validators.required),

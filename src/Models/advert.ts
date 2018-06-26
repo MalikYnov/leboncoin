@@ -14,7 +14,7 @@ export class Advert{
     public createDate:DateTime;
     public updateDate:DateTime;
 
-    constructor(public title:string = "", public picture:string ="", public price:number = null, public description:string = "", public location:number = null ){
+    constructor(public title:string = "", public img:string ="", public price:number = null, public description:string = "", public localisation:number = null ){
     
 
     }

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../home/home';
 
+//Page
+import { HomePage } from '../home/home';
+import { AccountPage } from '../account/account';
+import {UserAdvertsPage } from '../user-adverts/user-adverts'
 /**
  * Generated class for the TabsPage page.
  *
@@ -17,7 +20,7 @@ import { HomePage } from '../home/home';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = HomePage;
-  tab3Root = HomePage;
+  tab2Root = UserAdvertsPage;
+  tab3Root = AccountPage;
 
 }

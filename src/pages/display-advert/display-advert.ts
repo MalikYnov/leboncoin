@@ -24,7 +24,7 @@ export class DisplayAdvertPage {
     if( navParams.get('idAdvert')){
       let idAdvert = navParams.get('idAdvert');
       this.advert = this.utilsList.ListAdvert[idAdvert];
-      this.pictureURI = this.advert.picture;
+      this.pictureURI = this.advert.img;
     }else{
       this.navCtrl.push(HomePage);
     }

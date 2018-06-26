@@ -12,6 +12,7 @@ import { RegisterPage } from '../pages/register/register';
 import {DisplayAdvertPage } from '../pages/display-advert/display-advert';
 import { FormAdvertPage } from '../pages/form-advert/form-advert';
 import { AccountPage } from '../pages/account/account';
+import { UserAdvertsPage } from '../pages/user-adverts/user-adverts';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +34,8 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
     DisplayAdvertPage,
     FormAdvertPage,
     AccountPage,
-    RegisterPage
+    RegisterPage,
+    UserAdvertsPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
     DisplayAdvertPage,
     FormAdvertPage,
     AccountPage,
-    RegisterPage
+    RegisterPage,
+    UserAdvertsPage
 
   ],
   providers: [

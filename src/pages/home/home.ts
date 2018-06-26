@@ -43,12 +43,12 @@ export class HomePage {
 
     this.listAdvert.forEach(element => {
       element.idUser = 1;
+      element.id = 1;
     });
     
   }
 
   addAdvert(){
-    console.log("sdssssss");
     if(this.idUser == null){
        this.navCtrl.push(LoginPage);
     }else{
@@ -64,15 +64,9 @@ export class HomePage {
     this.navCtrl.push(LoginPage);
     
   }
-
-  updateAdvert(){
-    this.navCtrl.push(FormAdvertPage, {
-      idAdvert: 1
-    });
-  }
-  displayAdvert(){
+  displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
-      idAdvert: 1
+      idAdvert: advert.id
     });
   }
 
