@@ -106,7 +106,7 @@ export class FormAdvertPage {
 
   openGallery() {
     this.camera.getPicture({
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       allowEdit: true,
       quality: 100,
       targetWidth: 350,
