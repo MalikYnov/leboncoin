@@ -7,10 +7,12 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions,CaptureVideoOptions } from '@ionic-native/media-capture';
 import { LoginPage } from '../login/login';
+import { TabsPage } from '../tabs/tabs';
 import { UtilsList } from '../../Utils/lists-utils'
 import { Advert } from '../../Models/advert';
+
+import {ApiServiceProvider} from '../../providers/api-service/api-service'
 
 
 /**
@@ -29,15 +31,26 @@ export class FormAdvertPage {
   advertForm: FormGroup;
   pictureURI: string;
   imgView:string ;
+  token:string;
+  idUser:string;
+  errorMessage:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
-    private mediaCapture: MediaCapture) {
+      private apiService: ApiServiceProvider) {
+        this.idUser ="5b33b96d113f671da032f676";
+        this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGlrLmRkQHVvLmNvbSIsIl9pZCI6IjViMzNiOTZkMTEzZjY3MWRhMDMyZjY3NiIsImlhdCI6MTUzMDExNjcwMn0.NqmTt7pF4ypWTmiuU7W31YL3Viyp0VHAwrMDJn0m6dI"
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
     //   // Here you can do any higher level native things you might need.
     //   this.nativeStorage.getItem('user').then(
-    //     () => console.log("isValable"),
+    //     (data) => {
+    //       let user = JSON.parse(data);
+    //       // this.token = user['token'];
+    //       // this.token = user['id_user'];
+
+
+    //     },
     //     () => this.navCtrl.push(LoginPage)
     //   );
     // });
@@ -56,6 +69,7 @@ export class FormAdvertPage {
         title: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
         price: new FormControl(null, Validators.required),
+        localisation: new FormControl(null, Validators.required),
       });
     }
 
@@ -138,5 +152,53 @@ export class FormAdvertPage {
     });
 
     toast.present();
+  }
+
+  postDeal() {
+
+    let pictureName = "";
+    // let loading = this.loadingCtrl.create({
+    //   content: 'Patientez...'
+    // });
+
+
+    if (this.advertForm.valid) {
+      // loading.present();
+      let advert = new Advert(this.advertForm.value.title, this.pictureURI, this.advertForm.value.price,
+        this.advertForm.value.description, this.advertForm.value.localisation, this.idUser);
+      this.apiService.postAdvert(advert, this.token).subscribe(
+        data => {
+          // loading.dismiss();
+
+          let alert = this.alertCtrl.create({
+            title: 'annonce crée',
+            buttons: [
+              {
+                text: 'Ok',
+                handler: () => {
+                  this.navCtrl.push(TabsPage);
+                }
+              },
+            ],
+          });
+          alert.present();
+        },
+        error => {
+          // loading.dismiss();
+          console.error(error);
+        }
+      );
+
+
+    } else {
+
+      this.errorMessage = "Verifier le formulaire";
+      let alert = this.alertCtrl.create({
+        title: 'Erreur',
+        subTitle: this.errorMessage,
+        buttons: ['Ok']
+      });
+      alert.present();
+    }
   }
 }

@@ -17,7 +17,7 @@ export class AuthServiceProvider {
     }
     
     loginUser(email:string, password:string):Observable<any>{
-        var obj = { username: email, password: password,grant_type: "password"};
+        var obj = { email: email, password: password};
         let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
         let _options = { headers: header };
         let body = this.serializeObj(obj);
