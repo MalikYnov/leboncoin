@@ -77,10 +77,10 @@ export class HomePage {
   }
 
   connect() {
-    this.socket = io(this.configUrlApi.socketHost);
-    this.socket.on('connect', (msg) => {
-      console.log(msg);
-    });
+    // this.socket = io(this.configUrlApi.socketHost);
+    // this.socket.on('connect', (msg) => {
+    //   console.log(msg);
+    // });
   }
 
 }
