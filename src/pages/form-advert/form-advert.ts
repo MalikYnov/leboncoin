@@ -28,7 +28,7 @@ import { Advert } from '../../Models/advert';
 export class FormAdvertPage {
   advertForm: FormGroup;
   pictureURI: string;
-  imgView:String ;
+  imgView:string ;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
@@ -93,19 +93,9 @@ export class FormAdvertPage {
     }).then((imageData) => {
 
       console.log(imageData);
-      this.imgView= 'data:image/jpeg;base64,' + imageData;
-      this.base64ToGallery.base64ToGallery(imageData, { prefix: '_img' }).then(
- 
-         res => {
-           console.log('Saved image to gallery ', res);
-           this.presentToast(res);
-             //si la photo c'est corectement enregistrée on envoie une notification à l'user
-         
-         },
- 
-         err => this.presentToast(err)
- 
-     );
+      this.imgView = 'data:image/jpeg;base64,' + imageData;
+      this.presentToast(this.imgView);
+      
 
     },
       (err) => {
@@ -123,7 +113,8 @@ export class FormAdvertPage {
       targetHeight: 350,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }).then((imageData) => {
-      this.presentToast(imageData);
+      this.imgView = 'data:image/jpeg;base64,' + imageData;
+      this.presentToast(this.imgView);
     },
       (err) => {
         console.log(err);
