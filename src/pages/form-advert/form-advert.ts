@@ -86,7 +86,7 @@ export class FormAdvertPage {
 
   takePic() {
     this.camera.getPicture({
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       allowEdit: true,
       targetWidth: 350,
       targetHeight: 350,
@@ -113,7 +113,7 @@ export class FormAdvertPage {
       targetHeight: 350,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }).then((imageData) => {
-      this.imgView = 'data:image/jpeg;base64,' + imageData;
+      this.pictureURI = 'data:image/jpeg;base64,' + imageData;
       this.presentToast(this.pictureURI);
     },
       (err) => {
