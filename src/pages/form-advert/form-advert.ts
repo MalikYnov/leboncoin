@@ -93,8 +93,8 @@ export class FormAdvertPage {
     }).then((imageData) => {
 
       console.log(imageData);
-      this.imgView = 'data:image/jpeg;base64,' + imageData;
-      this.presentToast(this.imgView);
+      this.pictureURI = 'data:image/jpeg;base64,' + imageData;
+      this.presentToast(this.pictureURI);
       
 
     },
@@ -114,7 +114,7 @@ export class FormAdvertPage {
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }).then((imageData) => {
       this.imgView = 'data:image/jpeg;base64,' + imageData;
-      this.presentToast(this.imgView);
+      this.presentToast(this.pictureURI);
     },
       (err) => {
         console.log(err);
