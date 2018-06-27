@@ -155,7 +155,7 @@ export class FormAdvertPage {
     toast.present();
   }
 
-  postDeal() {
+  postAdvert() {
 
     let pictureName = "";
     // let loading = this.loadingCtrl.create({
