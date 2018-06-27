@@ -29,7 +29,7 @@ export class ApiServiceProvider {
     return this.http.get(this.configUrlApi.AdvertForCurrentUserUrlApi, _options);
   }
 
-  postDeal(advert:Advert,token:string):Observable<any>{
+  postAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     var tokenBearer = 'Bearer ' + token;
     header = header.append('Authorization',tokenBearer);

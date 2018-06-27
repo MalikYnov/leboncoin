@@ -63,6 +63,7 @@ export class FormAdvertPage {
         title: new FormControl(advert.title, Validators.required),
         description: new FormControl(advert.description, Validators.required),
         price: new FormControl(advert.price, Validators.required),
+        localisation: new FormControl(advert.localisation, Validators.required),
       });
     } else {
       this.advertForm = new FormGroup({
