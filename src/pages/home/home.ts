@@ -16,6 +16,9 @@ import { FormAdvertPage } from '../form-advert/form-advert';
 import { AccountPage } from '../account/account';
 import { DisplayAdvertPage } from '../display-advert/display-advert';
 
+//Providers
+import {ApiServiceProvider} from '../../providers/api-service/api-service';
+
 import * as io from "socket.io-client";
 
 
@@ -29,6 +32,8 @@ export class HomePage {
   idUser:number = 1;
   token:string = "";
   socket:any;
+  errorMessage:string;
+  apiService: ApiServiceProvider;
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform) {
     this.connect();
@@ -45,13 +50,19 @@ export class HomePage {
 
       );
     });
-    this.listAdvert = this.utilsList.ListAdvert ;
 
-    this.listAdvert.forEach(element => {
-      element.idUser = 1;
-      element.id = 1;
-    });
-    
+
+    this.apiService.getAllAdverts(this.token).subscribe(
+      data => {
+        data.forEach(element => {
+          let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
+          this.listAdvert.push(advert);
+        });
+      },
+      error => {
+        this.errorMessage = error.error['Message'];
+      }
+    );
   }
 
   addAdvert(){

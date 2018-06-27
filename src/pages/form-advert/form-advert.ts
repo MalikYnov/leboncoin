@@ -12,7 +12,7 @@ import { TabsPage } from '../tabs/tabs';
 import { UtilsList } from '../../Utils/lists-utils'
 import { Advert } from '../../Models/advert';
 
-import {ApiServiceProvider} from '../../providers/api-service/api-service'
+import {ApiServiceProvider} from '../../providers/api-service/api-service';
 
 
 /**
