@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Base64 } from '@ionic-native/base64';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+import { MediaCapture} from '@ionic-native/media-capture';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -70,7 +72,9 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
     ConfigUrlApi,
     Base64,
     Camera,
-    PhotoLibrary
+    PhotoLibrary,
+    Base64ToGallery,
+    MediaCapture
   ]
 })
 export class AppModule {}
