@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
@@ -9,7 +9,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { LoginPage } from '../login/login';
-import {UtilsList} from '../../Utils/lists-utils'
+import { UtilsList } from '../../Utils/lists-utils'
 import { Advert } from '../../Models/advert';
 
 
@@ -27,9 +27,9 @@ import { Advert } from '../../Models/advert';
 })
 export class FormAdvertPage {
   advertForm: FormGroup;
-  pictureURI:string;
+  pictureURI: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
-     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64: Base64, private toastCtrl: ToastController) {
+    private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64: Base64, private toastCtrl: ToastController) {
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
     //   // Here you can do any higher level native things you might need.
@@ -39,7 +39,7 @@ export class FormAdvertPage {
     //   );
     // });
 
-    if( navParams.get('idAdvert')){
+    if (navParams.get('idAdvert')) {
       let idAdvert = navParams.get('idAdvert');
       let advert = this.utilsList.ListAdvert[idAdvert];
       this.pictureURI = advert.img;
@@ -47,14 +47,14 @@ export class FormAdvertPage {
         title: new FormControl(advert.title, Validators.required),
         description: new FormControl(advert.description, Validators.required),
         price: new FormControl(advert.price, Validators.required),
-      }); 
-      }else{
-        this.advertForm = new FormGroup({
-          title: new FormControl('', Validators.required),
-          description: new FormControl('', Validators.required),
-          price: new FormControl(null, Validators.required),
-        });
-      }
+      });
+    } else {
+      this.advertForm = new FormGroup({
+        title: new FormControl('', Validators.required),
+        description: new FormControl('', Validators.required),
+        price: new FormControl(null, Validators.required),
+      });
+    }
 
   }
 
@@ -92,11 +92,12 @@ export class FormAdvertPage {
       this.base64.encodeFile(imageData).then((base64File: string) => {
         console.log(base64File);
         this.presentToast(base64File);
-        
+
         this.pictureURI = base64File;
-        
+
       }, (err) => {
         console.log(err);
+        this.presentToast(err);
       });
 
     },
@@ -118,29 +119,33 @@ export class FormAdvertPage {
         this.pictureURI = base64File;
       }, (err) => {
         console.log(err);
+        this.presentToast(err);
+
       });
 
 
     },
       (err) => {
         console.log(err);
+        this.presentToast(err);
+
       });
   }
   deletePicture() {
     this.pictureURI = null;
   }
 
-  presentToast(img:string) {
+  presentToast(img: string) {
     let toast = this.toastCtrl.create({
       message: img,
       duration: 3000,
       position: 'top'
     });
-  
+
     toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
-  
+
     toast.present();
   }
 }

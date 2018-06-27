@@ -60,7 +60,8 @@ export class LoginPage {
     this.isRunning = true;
     var user = this._authService.loginUser(this.userForm.value.email, this.userForm.value.password).subscribe(
       data => {
-        if (data['access_token']) {
+        console.log(data);
+        if (data['token']) {
 
           this.nativeStorage.setItem('user', JSON.stringify(data)).then(
             () => {
