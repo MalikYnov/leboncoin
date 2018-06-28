@@ -5,7 +5,7 @@ export class ConfigUrlApi{
     public AdvertUrlApi:string = "https://leboncoin-malik10.c9users.io/adverts"
     public LoginUrlApi:string = "https://leboncoin-malik10.c9users.io/users/login";
     public RegisternUrlApi:string = "https://leboncoin-malik10.c9users.io/users";
-    public socketHost:string ="https://leboncoin-malik10.c9users.io/adverts";
+    public socketHost:string ="wss://echo.websocket.org/";
     
     
 }
