@@ -35,10 +35,11 @@ export class FormAdvertPage {
   idUser:string;
   errorMessage:string;
   isUpdate:boolean = false;
+  // loadingCtrl:LoadingController
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
-      private apiService: ApiServiceProvider, loadingCtrl:LoadingController) {
+      private apiService: ApiServiceProvider, private loadingCtrl:LoadingController) {
         // this.idUser ="5b33b96d113f671da032f676";
         // this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGlrLmRkQHVvLmNvbSIsIl9pZCI6IjViMzNiOTZkMTEzZjY3MWRhMDMyZjY3NiIsImlhdCI6MTUzMDExNjcwMn0.NqmTt7pF4ypWTmiuU7W31YL3Viyp0VHAwrMDJn0m6dI"
     platform.ready().then(() => {
@@ -160,9 +161,10 @@ export class FormAdvertPage {
   postAdvert() {
 
     let pictureName = "";
+    
     let loading = this.loadingCtrl.create({
-       content: 'Patientez...'
-    });
+      content: 'Patientez...'
+    })
     loading.present();
 
     if (this.advertForm.valid) {

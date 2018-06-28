@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule,LoadingController, AlertController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Base64 } from '@ionic-native/base64';
@@ -73,6 +73,8 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
     Camera,
     PhotoLibrary,
     Base64ToGallery,
+    LoadingController,
+    AlertController
   ]
 })
 export class AppModule {}
