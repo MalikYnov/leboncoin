@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>account-page</ion-title>
+    <ion-title>Mon Compte</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +15,13 @@
 
 <ion-content padding>
 
+  <div *ngIf="user">
+    <ion-card class="block">
+      <p> {{user.firstname}} {{user.lastname}}</p>
+      <p> Nom : {{user.email}}</p>
+      <p> Nom : {{user.firstname}}</p>
+
+      <button offset-1 col-10 type="submit" ion-button center style="background-color:red" (click)="disconect()"> Déconnexion</button>
+    </ion-card>
+  </div>
 </ion-content>

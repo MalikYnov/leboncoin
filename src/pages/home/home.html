@@ -10,9 +10,14 @@
         <button ion-button icon-only color="royal" (click)="addAdvert()">
             <ion-icon name="add" ></ion-icon>
           </button>
-      <button ion-button icon-only color="royal" (click)="login()">
-        <ion-icon name="person" ></ion-icon>
+      <button *ngIf="!idUser; else templateButton"ion-button icon-only color="royal" (click)="login()">
+        <ion-icon name="log-in"></ion-icon>
       </button>
+      <ng-template #templateButton>
+          <button ion-button icon-only color="royal" (click)="goAccount()">
+              <ion-icon name="person" ></ion-icon>
+            </button>
+        </ng-template>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -27,6 +32,9 @@
         </ion-card-title>
       </ion-card-content>
       <ion-row no-padding>
+          <ion-col text-left>
+              <p>Prix : {{advert.price}}</p>
+            </ion-col>
         <ion-col text-right>
           <button ion-button clear small color="danger" (click)="displayAdvert($event,advert)" icon-start>
             <ion-icon name='eye'></ion-icon>

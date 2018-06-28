@@ -87,6 +87,14 @@ export class UserAdvertsPage {
         this.navCtrl.push(LoginPage);
         
       }
+      // logout(){
+      //   var response = this.AuthService.logout();
+      //   if(response){
+      //     this.presentToast("déconnecté");
+      //     this.idUser = null;
+      //     this.token = null;
+      //   }
+      // }
     
       updateAdvert(event, advert){
         console.log(advert);

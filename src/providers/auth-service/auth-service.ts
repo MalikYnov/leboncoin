@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 
 import {ConfigUrlApi} from '../../Utils/ConfigUrlApi';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 //Models
 import { User } from '../../Models/user';
@@ -12,7 +13,7 @@ import { User } from '../../Models/user';
 @Injectable()
 export class AuthServiceProvider {
 
-    constructor(public http:HttpClient, private configUrlApi:ConfigUrlApi){
+    constructor(public http:HttpClient, private configUrlApi:ConfigUrlApi, public nativeStorage:NativeStorage){
 
     }
     
@@ -32,8 +33,17 @@ export class AuthServiceProvider {
         let _options = { headers: header };
         return this.http.post(this.configUrlApi.RegisternUrlApi, body ,_options)
       }
-    logout() {
-        // remove user from local storage to log user out
+    logout():boolean {
+        this.nativeStorage.remove('user').then(
+            () => {
+                return true
+            },
+            () =>{
+                return false
+            } 
+          );
+
+          return false;
 
     }
     private serializeObj(obj) {

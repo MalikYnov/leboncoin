@@ -18,6 +18,8 @@ import { DisplayAdvertPage } from '../display-advert/display-advert';
 
 //Providers
 import {ApiServiceProvider} from '../../providers/api-service/api-service';
+import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
+
 
 import * as io from "socket.io-client";
 
@@ -36,7 +38,7 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
-    public apiService: ApiServiceProvider, private toastCtrl: ToastController) {
+    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider) {
     this.connect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
@@ -71,7 +73,6 @@ export class HomePage {
   }
 
   addAdvert(){
-    this.presentToast(this.idUser);
     
     if(this.idUser == null){
        this.navCtrl.push(LoginPage);
@@ -80,11 +81,18 @@ export class HomePage {
     }
   }
   login(){
-    this.presentToast(this.idUser);
     if(this.idUser == null){
        this.navCtrl.push(LoginPage);
     }else{
       this.navCtrl.push(AccountPage);
+    }
+  }
+  logout(){
+    var response = this.AuthService.logout();
+    if(response){
+      this.presentToast("déconnecté");
+      this.idUser = null;
+      this.token = null;
     }
   }
 
