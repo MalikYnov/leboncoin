@@ -144,9 +144,9 @@ export class FormAdvertPage {
     this.pictureURI = null;
   }
 
-  presentToast(img: string) {
+  presentToast(message: string) {
     let toast = this.toastCtrl.create({
-      message: img,
+      message: message,
       duration: 3000,
       position: 'top'
     });
@@ -215,7 +215,7 @@ export class FormAdvertPage {
             },
             error => {
                loading.dismiss();
-              console.error(error);
+              this.presentToast(error);
             }
           );
         }
