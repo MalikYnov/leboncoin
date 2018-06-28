@@ -29,10 +29,9 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import {UtilsList} from '../Utils/lists-utils';
 import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
-import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { ChatService } from '../providers/chat-service/chat-service';
 
 const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} };
-
 
 
 @NgModule({
@@ -82,7 +81,7 @@ const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} }
     Base64ToGallery,
     LoadingController,
     AlertController,
-    ChatServiceProvider
+    ChatService
   ]
 })
 export class AppModule {}
