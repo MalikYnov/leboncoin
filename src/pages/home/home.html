@@ -18,8 +18,8 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="listAdvert">
-    <ion-card *ngFor="let advert of listAdvert">
+  <div *ngIf="advertsList">
+    <ion-card *ngFor="let advert of advertsList">
       <img src="{{advert.img}}" />
       <ion-card-content>
         <ion-card-title>

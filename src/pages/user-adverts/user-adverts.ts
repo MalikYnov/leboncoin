@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 
@@ -30,10 +30,13 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service'
 })
 export class UserAdvertsPage {
 
-  listAdvert:Advert[];
-  idUser:number = 1;
+  public advertsList: Array<Advert> = new Array<Advert>();
+  
+  idUser:string = "5b33b96d113f671da032f676";
   token:string = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform, public apiServiceProvider: ApiServiceProvider) {
+  errorMessage:string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform,
+     public apiService: ApiServiceProvider, private alertCtrl: AlertController) {
 
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
@@ -49,17 +52,26 @@ export class UserAdvertsPage {
       );
     });
     
-    this.listAdvert = this.utilsList.ListAdvert ;
-    
-        this.listAdvert.forEach(element => {
-          element.idUser = 1;
-          element.id = 1;
+    this.apiService.getAllAdverts().subscribe(
+      data => {
+        console.log(data);
+        data.forEach(element => {
+          let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
+          advert.id = element._id;
+          if(advert.id_user == this.idUser){
+            this.advertsList.push(advert);
+          }
         });
-        
+        console.log(this.advertsList);
+      },
+      error => {
+        this.errorMessage = error.error['Message'];
       }
+      
+    );
+  }
     
       addAdvert(){
-        console.log("sdssssss");
         if(this.idUser == null){
            this.navCtrl.push(LoginPage);
         }else{
@@ -76,21 +88,68 @@ export class UserAdvertsPage {
         
       }
     
-      updateAdvert(){
+      updateAdvert(event, advert){
+        console.log(advert);
         this.navCtrl.push(FormAdvertPage, {
-          idAdvert: 1
+          ad: advert
         });
       }
-      displayAdvert(){
+      displayAdvert(event, advert){
         this.navCtrl.push(DisplayAdvertPage, {
-          idAdvert: 1
+          ad: advert
         });
       }
       deleteAdvert(event, advert){
-        this.apiServiceProvider.DeleteAdvert(advert.id, this.token);
+        let alert = this.alertCtrl.create({
+          title: 'Voulez-vous supprimer cette annonce',
+          // message: 'Do you want to buy this book?',
+          buttons: [
+            {
+              text: 'oui',
+    
+              handler: () => {
+                this.callDeleteService(advert.id);
+              }
+            },
+            {
+              text: 'non',
+              handler: () => {
+                
+              }
+            }
+          ]
+        });
+        alert.present();
+
+          
         //todo ajouter le retour:
 
       }
 
+      callDeleteService(id){
+        this.apiService.DeleteAdvert(id, this.token).subscribe(
+          data =>{
+              if(data['value'] == true){
+                let alert = this.alertCtrl.create({
+                  title: 'annonce supprimée' ,
+                  subTitle: 'Succès',
+                  buttons: ['Ok']
+                });
+                alert.present();
+              }else{
+
+                  let alert = this.alertCtrl.create({
+                    title: 'annonce supprimée' ,
+                    subTitle: 'une erreur c\'est produite',
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+              }
+          }, 
+          error => {
+
+          }
+        );
+      }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
@@ -34,30 +34,29 @@ export class FormAdvertPage {
   token:string;
   idUser:string;
   errorMessage:string;
+  isUpdate:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
-      private apiService: ApiServiceProvider) {
-        this.idUser ="5b33b96d113f671da032f676";
-        this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGlrLmRkQHVvLmNvbSIsIl9pZCI6IjViMzNiOTZkMTEzZjY3MWRhMDMyZjY3NiIsImlhdCI6MTUzMDExNjcwMn0.NqmTt7pF4ypWTmiuU7W31YL3Viyp0VHAwrMDJn0m6dI"
-    // platform.ready().then(() => {
-    //   // Okay, so the platform is ready and our plugins are available.
-    //   // Here you can do any higher level native things you might need.
-    //   this.nativeStorage.getItem('user').then(
-    //     (data) => {
-    //       let user = JSON.parse(data);
-    //       // this.token = user['token'];
-    //       // this.token = user['id_user'];
+      private apiService: ApiServiceProvider, loadingCtrl:LoadingController) {
+        // this.idUser ="5b33b96d113f671da032f676";
+        // this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGlrLmRkQHVvLmNvbSIsIl9pZCI6IjViMzNiOTZkMTEzZjY3MWRhMDMyZjY3NiIsImlhdCI6MTUzMDExNjcwMn0.NqmTt7pF4ypWTmiuU7W31YL3Viyp0VHAwrMDJn0m6dI"
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.nativeStorage.getItem('user').then(
+        (data) => {
+          let user = JSON.parse(data);
+          this.token = user['token'];
+          this.token = user['id_user'];
+        },
+        () => this.navCtrl.push(LoginPage)
+      );
+    });
 
-
-    //     },
-    //     () => this.navCtrl.push(LoginPage)
-    //   );
-    // });
-
-    if (navParams.get('idAdvert')) {
-      let idAdvert = navParams.get('idAdvert');
-      let advert = this.utilsList.ListAdvert[idAdvert];
+    if( navParams.get('ad')){
+      this.isUpdate = true;
+      let advert = navParams.get('ad');
       this.pictureURI = advert.img;
       this.advertForm = new FormGroup({
         title: new FormControl(advert.title, Validators.required),
@@ -65,7 +64,10 @@ export class FormAdvertPage {
         price: new FormControl(advert.price, Validators.required),
         localisation: new FormControl(advert.localisation, Validators.required),
       });
+
     } else {
+      this.isUpdate = false;
+      
       this.advertForm = new FormGroup({
         title: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
@@ -118,7 +120,6 @@ export class FormAdvertPage {
       });
   }
 
-
   openGallery() {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -137,6 +138,7 @@ export class FormAdvertPage {
 
       });
   }
+
   deletePicture() {
     this.pictureURI = null;
   }
@@ -158,38 +160,63 @@ export class FormAdvertPage {
   postAdvert() {
 
     let pictureName = "";
-    // let loading = this.loadingCtrl.create({
-    //   content: 'Patientez...'
-    // });
-
+    let loading = this.loadingCtrl.create({
+       content: 'Patientez...'
+    });
+    loading.present();
 
     if (this.advertForm.valid) {
       // loading.present();
       let advert = new Advert(this.advertForm.value.title, this.pictureURI, this.advertForm.value.price,
         this.advertForm.value.description, this.advertForm.value.localisation, this.idUser);
-      this.apiService.postAdvert(advert, this.token).subscribe(
-        data => {
-          // loading.dismiss();
 
-          let alert = this.alertCtrl.create({
-            title: 'annonce crée',
-            buttons: [
-              {
-                text: 'Ok',
-                handler: () => {
-                  this.navCtrl.push(TabsPage);
-                }
-              },
-            ],
-          });
-          alert.present();
-        },
-        error => {
-          // loading.dismiss();
-          console.error(error);
+        if(this.isUpdate){
+          this.apiService.PutAdvert(advert, this.token).subscribe(
+            data => {
+               loading.dismiss();
+    
+              let alert = this.alertCtrl.create({
+                title: 'Annonce Modifiée',
+                buttons: [
+                  {
+                    text: 'Ok',
+                    handler: () => {
+                      this.navCtrl.push(TabsPage);
+                    }
+                  },
+                ],
+              });
+              alert.present();
+            },
+            error => {
+              loading.dismiss();
+              console.error(error);
+            }
+          );
+        }else{
+          this.apiService.postAdvert(advert, this.token).subscribe(
+            data => {
+               loading.dismiss();
+    
+              let alert = this.alertCtrl.create({
+                title: 'annonce crée',
+                buttons: [
+                  {
+                    text: 'Ok',
+                    handler: () => {
+                      this.navCtrl.push(TabsPage);
+                    }
+                  },
+                ],
+              });
+              alert.present();
+            },
+            error => {
+               loading.dismiss();
+              console.error(error);
+            }
+          );
         }
-      );
-
 
     } else {
 

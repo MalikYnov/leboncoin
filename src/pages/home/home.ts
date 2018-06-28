@@ -28,41 +28,44 @@ import * as io from "socket.io-client";
 })
 export class HomePage {
 
-  listAdvert:Advert[];
-  idUser:number = 1;
-  token:string = "";
-  socket:any;
-  errorMessage:string;
-  apiService: ApiServiceProvider;
+  public advertsList: Array<Advert> = new Array<Advert>();
+  public idUser:number = 1;
+  public token:string;
+  public socket:any;
+  public errorMessage:string;
 
-  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform) {
+
+  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, public apiService: ApiServiceProvider) {
     this.connect();
-    platform.ready().then(() => {
-      //   // Okay, so the platform is ready and our plugins are available.
-      //   // Here you can do any higher level native things you might need.
-      this.nativeStorage.getItem('user').then(
-        (data) => {
-          let user = JSON.parse(data);
-          // this.idUser = user['id'];
-          // this.token = user['access_token'];
-        },
-        () => console.log("error")
+    // platform.ready().then(() => {
+    //   //   // Okay, so the platform is ready and our plugins are available.
+    //   //   // Here you can do any higher level native things you might need.
+    //   this.nativeStorage.getItem('user').then(
+    //     (data) => {
+    //       let user = JSON.parse(data);
+    //       this.idUser = user['id'];
+    //       this.token = user['access_token'];
+    //     },
+    //     () => console.log("error")
+    //   );
+    // });
 
-      );
-    });
 
-
-    this.apiService.getAllAdverts(this.token).subscribe(
-      data => {
-        data.forEach(element => {
-          let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
-          this.listAdvert.push(advert);
-        });
-      },
-      error => {
-        this.errorMessage = error.error['Message'];
-      }
-    );
+     this.apiService.getAllAdverts().subscribe(
+       data => {
+         console.log(data);
+         data.forEach(element => {
+           let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
+           advert.id = element._id;
+           this.advertsList.push(advert);
+         });
+         console.log(this.advertsList);
+       },
+       error => {
+         this.errorMessage = error.error['Message'];
+       }
+       
+     );
   }
 
   addAdvert(){
@@ -83,7 +86,7 @@ export class HomePage {
   }
   displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
-      idAdvert: advert.id
+      ad: advert
     });
   }
 

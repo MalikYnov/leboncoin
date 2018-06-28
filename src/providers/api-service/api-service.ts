@@ -20,10 +20,9 @@ export class ApiServiceProvider {
   constructor(public http: HttpClient, private configUrlApi:ConfigUrlApi) {
   }
 
-  getAllAdverts(token:string):Observable<any>{
+  getAllAdverts():Observable<any>{
     
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    header = header.append('Authorization',token);
     let _options = { headers: header };
     return this.http.get(this.configUrlApi.AdvertUrlApi, _options);
   }

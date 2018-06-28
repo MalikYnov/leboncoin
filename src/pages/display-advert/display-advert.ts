@@ -21,9 +21,8 @@ export class DisplayAdvertPage {
   pictureURI:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList) {
-    if( navParams.get('idAdvert')){
-      let idAdvert = navParams.get('idAdvert');
-      this.advert = this.utilsList.ListAdvert[idAdvert];
+    if( navParams.get('ad')){
+      this.advert = navParams.get('ad');
       this.pictureURI = this.advert.img;
     }else{
       this.navCtrl.push(HomePage);
