@@ -56,8 +56,9 @@ export class UserAdvertsPage {
         data.forEach(element => {
           let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
           advert._id = element._id;
+          this.presentToast(advert.id_user + "  ** " + this.idUser);
+          
           if(advert.id_user == this.idUser){
-            this.presentToast(advert.id_user + "  ** " + this.idUser)
             this.advertsList.push(advert);
           }
         });
