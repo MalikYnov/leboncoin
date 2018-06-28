@@ -110,9 +110,9 @@ export class HomePage {
 
     this.socket = io.connect(this.configUrlApi.socketHost);
     // this.zone = new NgZone({enableLongStackTrace: false})
-    this.socket.on('connect', (msg) => {
+    this.socket.on('evt', (evt) => {
       // this.zone.run(() =>{
-      this.presentToast(msg);
+      this.presentToast(evt.data);
     //   }
     // );
     });
