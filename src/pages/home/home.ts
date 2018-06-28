@@ -22,6 +22,7 @@ import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
 
 
 import * as io from "socket.io-client";
+import { NgZone } from '@angular/core/src/zone/ng_zone';
 
 
 @Component({
@@ -34,12 +35,13 @@ export class HomePage {
   public idUser:string = "null";
   public token:string = "null";
   public socket:any;
+  public zone:any;
   public errorMessage:string;
 
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
     public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider) {
-    this.connect();
+    this.socketConnect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
       //   // Here you can do any higher level native things you might need.
@@ -104,10 +106,14 @@ export class HomePage {
     });
   }
 
-  connect() {
-    this.socket = io(this.configUrlApi.socketHost);
+  socketConnect() {
+    this.socket = io.connect(this.configUrlApi.socketHost);
+    this.zone = new NgZone({enableLongStackTrace: false})
     this.socket.on('connect', (msg) => {
-      this.presentToast(msg.data);
+      this.zone.run(() =>{
+      this.presentToast(msg);
+      }
+    );
     });
   }
 
