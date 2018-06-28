@@ -10,7 +10,7 @@ export class Advert{
     // description     : { type: String, required: true },
     // localisation    : { type: Number, required: true },
     // id_user         : {type: Schema.Types.ObjectId, ref: 'users', required: true}
-    public _id:number;
+    public _id:string;
     public create_at :DateTime;
     public update_at:DateTime;
 

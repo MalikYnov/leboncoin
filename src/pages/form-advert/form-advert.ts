@@ -36,6 +36,7 @@ export class FormAdvertPage {
   errorMessage:string;
   isUpdate:boolean = false;
   buttonForm:string = "Créer";
+  currentIdAdvert:string;
   // loadingCtrl:LoadingController
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
@@ -59,6 +60,7 @@ export class FormAdvertPage {
       this.isUpdate = true;
       this.buttonForm = "Modifier";
       let advert = navParams.get('ad');
+      this.currentIdAdvert = advert._id;
       this.pictureURI = advert.img;
       this.advertForm = new FormGroup({
         title: new FormControl(advert.title, Validators.required),
@@ -172,7 +174,9 @@ export class FormAdvertPage {
       let advert = new Advert(this.advertForm.value.title, this.pictureURI, this.advertForm.value.price,
         this.advertForm.value.description, this.advertForm.value.localisation, this.idUser);
 
+
         if(this.isUpdate){
+          advert._id = this.currentIdAdvert;
           this.apiService.PutAdvert(advert, this.token).subscribe(
             data => {
                loading.dismiss();
