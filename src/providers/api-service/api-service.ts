@@ -30,16 +30,15 @@ export class ApiServiceProvider {
   getAdvertForCurrentUser(token:string):Observable<any>{
     
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    var tokenBearer = 'Bearer ' + token;
-    header = header.append('Authorization',tokenBearer);
+    header = header.append('x-access-token',token);
     let _options = { headers: header };
     return this.http.get(this.configUrlApi.AdvertForCurrentUserUrlApi, _options);
   }
 
   postAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    var tokenBearer = 'Bearer ' + token;
-    header = header.append('Authorization',tokenBearer);
+
+    header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
     console.log(body);
     let _options = { headers: header };
@@ -47,8 +46,7 @@ export class ApiServiceProvider {
   }
   PutAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    var tokenBearer = 'Bearer ' + token;
-    header = header.append('Authorization',tokenBearer);
+    header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
     console.log(body);
     let _options = { headers: header };
@@ -56,8 +54,8 @@ export class ApiServiceProvider {
   }
   DeleteAdvert(advertId,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    var tokenBearer = 'Bearer ' + token;
-    header = header.append('Authorization',tokenBearer);
+    var tokenBearer = token;
+    header = header.append('x-access-token',token);
     let _options = { headers: header };
     return this.http.delete(this.configUrlApi.AdvertUrlApi + '/' + advertId, _options);
   }
