@@ -107,7 +107,7 @@ export class HomePage {
   connect() {
     this.socket = io(this.configUrlApi.socketHost);
     this.socket.on('connect', (msg) => {
-      this.presentToast(msg);
+      this.presentToast(msg.data);
     });
   }
 
