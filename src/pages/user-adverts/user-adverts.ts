@@ -32,8 +32,8 @@ export class UserAdvertsPage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
   
-  public idUser:string;
-  public token:string;
+  public idUser:string = "";
+  public token:string = "";
   errorMessage:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform,
