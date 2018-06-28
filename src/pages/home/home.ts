@@ -107,13 +107,14 @@ export class HomePage {
   }
 
   socketConnect() {
+
     this.socket = io.connect(this.configUrlApi.socketHost);
-    this.zone = new NgZone({enableLongStackTrace: false})
+    // this.zone = new NgZone({enableLongStackTrace: false})
     this.socket.on('connect', (msg) => {
-      this.zone.run(() =>{
+      // this.zone.run(() =>{
       this.presentToast(msg);
-      }
-    );
+    //   }
+    // );
     });
   }
 
