@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
+import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
 
 
 /**
@@ -20,7 +21,7 @@ import { TabsPage } from '../tabs/tabs';
 export class AccountPage {
   user:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform:Platform, public nativeStorage:NativeStorage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform:Platform, public nativeStorage:NativeStorage, public authService:AuthServiceProvider) {
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
       //   // Here you can do any higher level native things you might need.
@@ -37,10 +38,10 @@ export class AccountPage {
   }
 
   disconect() {
-    this.nativeStorage.remove('user').then(
-      () => this.navCtrl.push(TabsPage),
-      (error) => console.log(error)
-    )
+    var response = this.authService.logout();
+     if(response){
+       this.navCtrl.push(TabsPage);
+     }
   }
 
 }
