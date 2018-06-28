@@ -58,7 +58,7 @@ export class HomePage {
          console.log(data);
          data.forEach(element => {
            let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
-           advert.id = element._id;
+           advert._id = element._id;
            this.advertsList.push(advert);
          });
          console.log(this.advertsList);
@@ -87,7 +87,7 @@ export class HomePage {
       this.navCtrl.push(AccountPage);
     }
   }
-  
+
   displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
       ad: advert
