@@ -43,8 +43,8 @@ export class HomePage {
       this.nativeStorage.getItem('user').then(
         (data) => {
           let user = JSON.parse(data);
-          this.idUser = user['id'];
-          this.token = user['access_token'];
+          this.idUser = user['id_user'];
+          this.token = user['token'];
         },
         () => console.log("error")
       );

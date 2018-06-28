@@ -32,8 +32,8 @@ export class UserAdvertsPage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
   
-  idUser:string = "5b33b96d113f671da032f676";
-  token:string = "";
+  idUser:string;
+  token:string;
   errorMessage:string;
   constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform,
      public apiService: ApiServiceProvider, private alertCtrl: AlertController) {
@@ -44,8 +44,8 @@ export class UserAdvertsPage {
       this.nativeStorage.getItem('user').then(
         (data) => {
           let user = JSON.parse(data);
-          // this.idUser = user['id'];
-          // this.token = user['access_token'];
+          this.idUser = user['id_user'];
+          this.token = user['token'];
         },
         () => console.log("error")
 
