@@ -7,6 +7,8 @@ import { Base64 } from '@ionic-native/base64';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -28,6 +30,9 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
 import {UtilsList} from '../Utils/lists-utils';
 import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
 
+const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} };
+
+
 
 @NgModule({
   declarations: [
@@ -44,7 +49,8 @@ import {ConfigUrlApi} from '../Utils/ConfigUrlApi';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    SocketIoModule.forRoot(config) 
   ],
   bootstrap: [IonicApp],
   entryComponents: [

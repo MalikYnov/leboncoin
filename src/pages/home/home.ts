@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Socket } from 'ng-socket-io';
 
 //Utils
 import {UtilsList} from '../../Utils/lists-utils'
@@ -34,13 +35,12 @@ export class HomePage {
   public advertsList: Array<Advert> = new Array<Advert>();
   public idUser:string = "null";
   public token:string = "null";
-  public socket:any;
   public zone:any;
   public errorMessage:string;
 
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
-    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider) {
+    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider, private socket: Socket) {
     this.socketConnect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
@@ -108,14 +108,17 @@ export class HomePage {
 
   socketConnect() {
 
-    this.socket = io.connect(this.configUrlApi.socketHost);
-    // this.zone = new NgZone({enableLongStackTrace: false})
-    this.socket.on('evt', (evt) => {
-      // this.zone.run(() =>{
-      this.presentToast(evt.data);
-    //   }
-    // );
-    });
+    this.socket.fromEvent("message").subscribe(
+      (data) => {
+        this.presentToast(data['msg']);
+      },
+      (error) => {
+        this.presentToast(error);
+      }
+
+    );
+      
+
   }
 
   presentToast(message: string) {
