@@ -40,7 +40,6 @@ export class ApiServiceProvider {
 
     header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
-    console.log(body);
     let _options = { headers: header };
     return this.http.post(this.configUrlApi.AdvertUrlApi, body ,_options)
   }
@@ -48,13 +47,11 @@ export class ApiServiceProvider {
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
-    console.log(body);
     let _options = { headers: header };
-    return this.http.put(this.configUrlApi.AdvertUrlApi + '/' + advert.id, body ,_options)
+    return this.http.put(this.configUrlApi.AdvertUrlApi + '/' + advert._id, body ,_options)
   }
   DeleteAdvert(advertId,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
-    var tokenBearer = token;
     header = header.append('x-access-token',token);
     let _options = { headers: header };
     return this.http.delete(this.configUrlApi.AdvertUrlApi + '/' + advertId, _options);
