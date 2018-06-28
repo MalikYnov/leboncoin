@@ -10,10 +10,9 @@ export class Advert{
     // description     : { type: String, required: true },
     // localisation    : { type: Number, required: true },
     // id_user         : {type: Schema.Types.ObjectId, ref: 'users', required: true}
-    public id:number;
-    public idUser:number;
-    public createDate:DateTime;
-    public updateDate:DateTime;
+    public _id:number;
+    public create_at :DateTime;
+    public update_at:DateTime;
 
     constructor(public title:string = "", public img:string ="", public price:number = null, public description:string = "", public localisation:number = null, public id_user ){
     
