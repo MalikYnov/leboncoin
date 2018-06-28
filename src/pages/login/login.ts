@@ -62,7 +62,6 @@ export class LoginPage {
       data => {
         console.log(data);
         if (data['token']) {
-
           this.nativeStorage.setItem('user', JSON.stringify(data)).then(
             () => {
               console.log('Stored item!');
