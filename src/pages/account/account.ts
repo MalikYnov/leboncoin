@@ -30,7 +30,7 @@ export class AccountPage {
   }
   
   //logOut user
-  disconect() {
+  logOut() {
     var response = this.authService.logout();
      if(response){
        this.navCtrl.push(TabsPage);

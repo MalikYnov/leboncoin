@@ -83,7 +83,7 @@ export class HomePage {
   }
 
   //Log out current User
-  logout(){
+  logOut(){
     var response = this.AuthService.logout();
     if(response){
       this.presentToast("log Out");
