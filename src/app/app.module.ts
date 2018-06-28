@@ -19,6 +19,7 @@ import {DisplayAdvertPage } from '../pages/display-advert/display-advert';
 import { FormAdvertPage } from '../pages/form-advert/form-advert';
 import { AccountPage } from '../pages/account/account';
 import { UserAdvertsPage } from '../pages/user-adverts/user-adverts';
+import { ToastEventPage } from '../elements/toast-event/toast-event';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -44,7 +45,8 @@ const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} }
     FormAdvertPage,
     AccountPage,
     RegisterPage,
-    UserAdvertsPage
+    UserAdvertsPage,
+    ToastEventPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} }
     FormAdvertPage,
     AccountPage,
     RegisterPage,
-    UserAdvertsPage
+    UserAdvertsPage,
+    ToastEventPage
 
   ],
   providers: [

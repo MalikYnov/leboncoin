@@ -1,26 +1,22 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
-import { NativeStorage } from '@ionic-native/native-storage';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+//Modules
+import { NativeStorage } from '@ionic-native/native-storage';
 import { PhotoLibrary } from '@ionic-native/photo-library';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
+
+//Pages
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
-import { UtilsList } from '../../Utils/lists-utils'
+
+//Models
 import { Advert } from '../../Models/advert';
 
-import {ApiServiceProvider} from '../../providers/api-service/api-service';
-
-
-/**
- * Generated class for the FormAdvertPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+//Providers
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 @IonicPage()
 @Component({
@@ -30,18 +26,16 @@ import {ApiServiceProvider} from '../../providers/api-service/api-service';
 export class FormAdvertPage {
   advertForm: FormGroup;
   pictureURI: string;
-  imgView:string ;
-  token:string;
-  idUser:string;
-  errorMessage:string;
-  isUpdate:boolean = false;
-  buttonForm:string = "Créer";
-  currentIdAdvert:string;
-  // loadingCtrl:LoadingController
+  imgView: string;
+  token: string;
+  idUser: string;
+  errorMessage: string;
+  isUpdate: boolean = false;
+  buttonForm: string = "Créer";
+  currentIdAdvert: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
-    private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
-      private apiService: ApiServiceProvider, private loadingCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, private photoLibrary: PhotoLibrary,
+    private camera: Camera, private alertCtrl: AlertController, private toastCtrl: ToastController, private apiService: ApiServiceProvider, private loadingCtrl: LoadingController) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -56,39 +50,37 @@ export class FormAdvertPage {
       );
     });
 
-    if( navParams.get('ad')){
+    this.advertForm = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      price: new FormControl(null, Validators.required),
+      localisation: new FormControl(null, Validators.required),
+    });
+    //Check if get Advert object
+    if (navParams.get('ad')) {
       this.isUpdate = true;
       this.buttonForm = "Modifier";
       let advert = navParams.get('ad');
       this.currentIdAdvert = advert._id;
       this.pictureURI = advert.img;
-      this.advertForm = new FormGroup({
-        title: new FormControl(advert.title, Validators.required),
-        description: new FormControl(advert.description, Validators.required),
-        price: new FormControl(advert.price, Validators.required),
-        localisation: new FormControl(advert.localisation, Validators.required),
-      });
 
-    } else {
-      this.isUpdate = false;
-      
-      this.advertForm = new FormGroup({
-        title: new FormControl('', Validators.required),
-        description: new FormControl('', Validators.required),
-        price: new FormControl(null, Validators.required),
-        localisation: new FormControl(null, Validators.required),
-      });
+      this.advertForm.setValue({
+        title: advert.title,
+        description: advert.description,
+        price: advert.price,
+        localisation: advert.localisation
+      })
     }
 
   }
 
+  //User choice behind Camera or Gallery
   addPicture() {
     let alert = this.alertCtrl.create({
       title: 'Choix ce l\'image',
       buttons: [
         {
           text: 'Choisir une Photo',
-
           handler: () => {
             this.openGallery();
           }
@@ -104,6 +96,7 @@ export class FormAdvertPage {
     alert.present();
   }
 
+  //open Camera and get picture
   takePic() {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -115,37 +108,36 @@ export class FormAdvertPage {
       console.log(imageData);
       this.pictureURI = 'data:image/jpeg;base64,' + imageData;
       this.presentToast(this.pictureURI);
-      
+
 
     },
       (err) => {
         console.log(err);
       });
   }
+
+  //open gallery and get picture
 
   openGallery() {
-    this.camera.getPicture({
-      destinationType: this.camera.DestinationType.DATA_URL,
-      allowEdit: true,
-      quality: 100,
-      targetWidth: 350,
-      targetHeight: 350,
-      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
-    }).then((imageData) => {
-      this.pictureURI = 'data:image/jpeg;base64,' + imageData;
-      this.presentToast(this.pictureURI);
-    },
-      (err) => {
-        console.log(err);
-        this.presentToast(err);
-
+    this.photoLibrary.requestAuthorization().then(() => {
+      this.photoLibrary.getLibrary().subscribe({
+        next: library => {
+          library.forEach(function(libraryItem) {
+          this.pictureURI = 'data:image/jpeg;base64,' + libraryItem.photoURL;
+          });
+        },
+        error: err => { console.log('could not get photos'); },
+        complete: () => { console.log('done getting photos'); }
       });
+    })
   }
 
+  //delete picture of form
   deletePicture() {
     this.pictureURI = null;
   }
 
+  //display tost with params message
   presentToast(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -160,79 +152,68 @@ export class FormAdvertPage {
     toast.present();
   }
 
+  //Send Advert (post or Put)
   postAdvert() {
-
-    let pictureName = "";
-
     let loading = this.loadingCtrl.create({
       content: 'Patientez...'
     })
     loading.present();
 
     if (this.advertForm.valid) {
-      // loading.present();
       let advert = new Advert(this.advertForm.value.title, this.pictureURI, this.advertForm.value.price,
         this.advertForm.value.description, this.advertForm.value.localisation, this.idUser);
 
+      if (this.isUpdate) {
+        advert._id = this.currentIdAdvert;
 
-        if(this.isUpdate){
-          advert._id = this.currentIdAdvert;
-          this.apiService.PutAdvert(advert, this.token).subscribe(
-            data => {
-               loading.dismiss();
-    
-              let alert = this.alertCtrl.create({
-                title: 'Annonce Modifiée',
-                buttons: [
-                  {
-                    text: 'Ok',
-                    handler: () => {
-                      this.navCtrl.push(TabsPage);
-                    }
-                  },
-                ],
-              });
-              alert.present();
-            },
-            error => {
-              loading.dismiss();
-              console.error(error);
-            }
-          );
-        }else{
-          this.apiService.postAdvert(advert, this.token).subscribe(
-            data => {
-               loading.dismiss();
-    
-              let alert = this.alertCtrl.create({
-                title: 'annonce crée',
-                buttons: [
-                  {
-                    text: 'Ok',
-                    handler: () => {
-                      this.navCtrl.push(TabsPage);
-                    }
-                  },
-                ],
-              });
-              alert.present();
-            },
-            error => {
-               loading.dismiss();
-              this.presentToast(error);
-            }
-          );
-        }
+        this.apiService.PutAdvert(advert, this.token).subscribe(
+          data => {
+            loading.dismiss();
+            let alert = this.alertCtrl.create({
+              title: 'Annonce Modifiée',
+              buttons: [
+                {
+                  text: 'Ok',
+                  handler: () => {
+                    this.navCtrl.push(TabsPage);
+                  }
+                },
+              ],
+            });
+            alert.present();
+          },
+          error => {
+            loading.dismiss();
+            console.error(error);
+          }
+        );
+      } else {
+        this.apiService.postAdvert(advert, this.token).subscribe(
+          data => {
+            loading.dismiss();
 
+            let alert = this.alertCtrl.create({
+              title: 'annonce crée',
+              buttons: [
+                {
+                  text: 'Ok',
+                  handler: () => {
+                    this.navCtrl.push(TabsPage);
+                  }
+                },
+              ],
+            });
+
+            alert.present();
+          },
+          error => {
+            loading.dismiss();
+            this.presentToast(error);
+          }
+        );
+      }
     } else {
-
-      this.errorMessage = "Verifier le formulaire";
-      let alert = this.alertCtrl.create({
-        title: 'Erreur',
-        subTitle: this.errorMessage,
-        buttons: ['Ok']
-      });
-      alert.present();
+      this.presentToast("Verifier le formulaire");
     }
   }
 }

@@ -5,8 +5,6 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { Socket } from 'ng-socket-io';
 
 //Utils
-import {UtilsList} from '../../Utils/lists-utils'
-import {ConfigUrlApi} from '../../Utils/ConfigUrlApi'
 
 //Models
 import { Advert } from '../../Models/advert';
@@ -20,10 +18,6 @@ import { DisplayAdvertPage } from '../display-advert/display-advert';
 //Providers
 import {ApiServiceProvider} from '../../providers/api-service/api-service';
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
-
-
-import * as io from "socket.io-client";
-import { NgZone } from '@angular/core/src/zone/ng_zone';
 import { ChatService } from '../../providers/chat-service/chat-service';
 
 
@@ -40,9 +34,9 @@ export class HomePage {
   public errorMessage:string;
 
 
-  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
-    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider, private socket: Socket, private chatService:ChatService) {
-    this.socketConnect();
+  constructor(public navCtrl: NavController, private nativeStorage: NativeStorage, public platform: Platform,public apiService: ApiServiceProvider,
+     private toastCtrl: ToastController, private AuthService:AuthServiceProvider) {
+
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
       //   // Here you can do any higher level native things you might need.
@@ -58,76 +52,58 @@ export class HomePage {
       );
     });
 
-
+    //Get all Adverts
      this.apiService.getAllAdverts(this.token).subscribe(
        data => {
-         console.log(data);
          data.forEach(element => {
            let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
            advert._id = element._id;
            this.advertsList.push(advert);
          });
-         console.log(this.advertsList);
        },
        error => {
-         this.errorMessage = error.error['Message'];
+         this.presentToast(error.error['Message']);
        }
        
      );
   }
 
+  //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert(){
-    
     if(this.idUser == null){
        this.navCtrl.push(LoginPage);
     }else{
       this.navCtrl.push(FormAdvertPage);
     }
   }
+
+  //NavigateTo Login-page
   login(){
-    if(this.idUser == null){
-       this.navCtrl.push(LoginPage);
-    }else{
-      this.navCtrl.push(AccountPage);
-    }
+    this.navCtrl.push(LoginPage);
   }
+
+  //Log out current User
   logout(){
     var response = this.AuthService.logout();
     if(response){
-      this.presentToast("déconnecté");
+      this.presentToast("log Out");
       this.idUser = null;
       this.token = null;
     }
   }
 
+  //Navigate to display-advert page
   displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
       ad: advert
     });
   }
 
-  socketConnect() {
-
-    this.chatService
-    .getMessage()
-    .subscribe(msg => {
-      this.presentToast( "1st "+msg);
-    });
-    
-      
-
-  }
-  sendMessage(){
-
-      this.chatService.sendMessage("aaa");
-   }
-  
-  
-
+  //display a toat with message params
   presentToast(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 6000,
+      duration: 3000,
       position: 'top'
     });
     

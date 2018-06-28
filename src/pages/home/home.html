@@ -1,11 +1,7 @@
+<page-toast-event></page-toast-event>
 <ion-header>
   <ion-toolbar>
-    <ion-buttons start>
-      <button ion-button icon-only color="royal" (click)="sendMessage()">
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Annonces</ion-title>
+    <ion-title center>Annonces</ion-title>
     <ion-buttons end>
         <button ion-button icon-only color="royal" (click)="addAdvert()">
             <ion-icon name="add" ></ion-icon>
@@ -14,8 +10,8 @@
         <ion-icon name="log-in"></ion-icon>
       </button>
       <ng-template #templateButton>
-          <button ion-button icon-only color="royal" (click)="goAccount()">
-              <ion-icon name="person" ></ion-icon>
+          <button ion-button icon-only color="royal" (click)="logOut()">
+              <ion-icon name="log-out"></ion-icon>
             </button>
         </ng-template>
     </ion-buttons>
@@ -24,7 +20,7 @@
 
 <ion-content padding>
   <div *ngIf="advertsList">
-    <ion-card *ngFor="let advert of advertsList">
+    <ion-card *ngFor="let advert of advertsList" (click)="displayAdvert($event,advert)">
       <img src="{{advert.img}}" />
       <ion-card-content>
         <ion-card-title>
@@ -33,7 +29,7 @@
       </ion-card-content>
       <ion-row no-padding>
           <ion-col text-left>
-              <p>Prix : {{advert.price}}</p>
+              <p>Prix : {{advert.price}} €</p>
             </ion-col>
         <ion-col text-right>
           <button ion-button clear small color="danger" (click)="displayAdvert($event,advert)" icon-start>

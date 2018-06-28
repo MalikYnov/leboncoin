@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
@@ -34,16 +34,12 @@ export class LoginPage {
   private errorMessage: string;
   rootRegisterPage: any;
 
-  constructor(platform: Platform, public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage,
+  constructor(platform: Platform, public navCtrl: NavController, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
     
-    
-
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.nativeStorage.getItem('user').then(
-        () => console.log("isValable"),
+        () => this.navCtrl.push(LoginPage),
         () => console.log('noValabe')
       );
     });
@@ -52,9 +48,11 @@ export class LoginPage {
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
+
     this.rootRegisterPage = RegisterPage;
   }
 
+  //Try log In user
   onConect() {
     this.formLoginVisible = false;
     this.isRunning = true;

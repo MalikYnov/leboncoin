@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/map'; 
-import { Socket } from 'ng-socket-io';
+import 'rxjs/add/operator/map';
+
+import * as io from 'socket.io-client';
+
 
 @Injectable()
 export class ChatService {
+  private url = 'https://leboncoin-malik10.c9users.io';
+  private socket = io(this.url);
 
-    constructor(private socket: Socket) {}
 
-    getMessage() {
-        return this.socket
-            .fromEvent<any>("msg")
-            .map(data => data.msg);
-    }
-
-    sendMessage(msg: string) {
-        this.socket
-            .emit("msg", msg);
-    }
+  onAddContact(contact) {
+    this.socket.emit('add-contact', "ffff");
+  }
+  listenOnAddAdvert() {
+    let observable = new Observable(observer => {
+      this.socket.on('myEvent', (data) => {
+        observer.next(data);
+        console.log(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    })
+  return observable;
+  }
 }

@@ -61,11 +61,9 @@ export class RegisterPage {
       var user = new User(this.registerForm.value.pseudo,this.registerForm.value.firstname,this.registerForm.value.lastname,this.registerForm.value.email, this.registerForm.value.password)
       this._authService.registerUser(user).subscribe(
         data => {
-          console.log("data ====" + data);
           var user = this._authService.loginUser(this.registerForm.value.email, this.registerForm.value.password).subscribe(
             data => {
               if (data['token']) {
-
                 this.nativeStorage.setItem('user', JSON.stringify(data)).then(
                   () => {
                     console.log('Stored item!');
