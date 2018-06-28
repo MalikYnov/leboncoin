@@ -52,7 +52,7 @@ export class UserAdvertsPage {
       );
     });
     
-    this.apiService.getAllAdverts().subscribe(
+    this.apiService.getAllAdverts(this.token).subscribe(
       data => {
         console.log(data);
         data.forEach(element => {
