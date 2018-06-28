@@ -51,7 +51,7 @@ export class FormAdvertPage {
           this.token = user['token'];
           this.token = user['id_user'];
         },
-        () => this.navCtrl.push(LoginPage)
+        (error) => this.navCtrl.push(LoginPage)
       );
     });
 
@@ -161,7 +161,7 @@ export class FormAdvertPage {
   postAdvert() {
 
     let pictureName = "";
-    
+
     let loading = this.loadingCtrl.create({
       content: 'Patientez...'
     })
