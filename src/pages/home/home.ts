@@ -31,8 +31,8 @@ import * as io from "socket.io-client";
 export class HomePage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
-  public idUser:string = null;
-  public token:string = null;
+  public idUser:string = "null";
+  public token:string = "null";
   public socket:any;
   public errorMessage:string;
 
@@ -50,7 +50,9 @@ export class HomePage {
           this.idUser = user['id_user'];
           this.token = user['token'];
         },
-        () => this.presentToast("error")
+        () => {
+          this.presentToast("error")
+        }
       );
     });
 

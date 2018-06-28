@@ -32,15 +32,14 @@ export class UserAdvertsPage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
   
-  idUser:string;
-  token:string;
+  public idUser:string = "null";
+  public token:string = "null";
   errorMessage:string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform,
      public apiService: ApiServiceProvider, private alertCtrl: AlertController) {
 
     platform.ready().then(() => {
-      //   // Okay, so the platform is ready and our plugins are available.
-      //   // Here you can do any higher level native things you might need.
       this.nativeStorage.getItem('user').then(
         (data) => {
           let user = JSON.parse(data);
@@ -48,7 +47,6 @@ export class UserAdvertsPage {
           this.token = user['token'];
         },
         () => console.log("error")
-
       );
     });
     
