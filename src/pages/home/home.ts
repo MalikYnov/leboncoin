@@ -24,6 +24,7 @@ import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
 
 import * as io from "socket.io-client";
 import { NgZone } from '@angular/core/src/zone/ng_zone';
+import { ChatService } from '../../providers/chat-service/chat-service';
 
 
 @Component({
@@ -40,14 +41,13 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
-    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider, private socket: Socket) {
+    public apiService: ApiServiceProvider, private toastCtrl: ToastController, private AuthService:AuthServiceProvider, private socket: Socket, private chatService:ChatService) {
     this.socketConnect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
       //   // Here you can do any higher level native things you might need.
       this.nativeStorage.getItem('user').then(
         (data) => {
-          this.presentToast(data);
           let user = JSON.parse(data);
           this.idUser = user['id_user'];
           this.token = user['token'];
@@ -108,23 +108,21 @@ export class HomePage {
 
   socketConnect() {
 
-    this.socket.fromEvent("message").subscribe(
-      (data) => {
-        this.presentToast(data['msg']);
-      },
-      (error) => {
-        this.presentToast(error);
-      }
-
-    );
+    this.chatService
+    .getMessage()
+    .subscribe(msg => {
+      this.presentToast( "1st "+msg);
+    });
+    
       
 
   }
   sendMessage(){
 
-      this.socket.emit("message", "aaa");
+      this.chatService.sendMessage("aaa");
+   }
   
-  }
+  
 
   presentToast(message: string) {
     let toast = this.toastCtrl.create({
