@@ -49,7 +49,7 @@ export class FormAdvertPage {
         (data) => {
           let user = JSON.parse(data);
           this.token = user['token'];
-          this.token = user['id_user'];
+          this.idUser = user['id_user'];
         },
         (error) => this.navCtrl.push(LoginPage)
       );

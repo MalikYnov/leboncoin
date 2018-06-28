@@ -29,8 +29,8 @@ import * as io from "socket.io-client";
 export class HomePage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
-  public idUser:string;
-  public token:string;
+  public idUser:string = null;
+  public token:string = null;
   public socket:any;
   public errorMessage:string;
 
