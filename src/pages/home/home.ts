@@ -120,6 +120,11 @@ export class HomePage {
       
 
   }
+  sendMessage(){
+
+      this.socket.emit("message", "aaa");
+  
+  }
 
   presentToast(message: string) {
     let toast = this.toastCtrl.create({
