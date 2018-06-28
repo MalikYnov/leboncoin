@@ -32,12 +32,12 @@ export class UserAdvertsPage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
   
-  public idUser:string = "null";
-  public token:string = "null";
+  public idUser:string;
+  public token:string;
   errorMessage:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform,
-     public apiService: ApiServiceProvider, private alertCtrl: AlertController) {
+     public apiService: ApiServiceProvider, private alertCtrl: AlertController, private toastCtrl:ToastController) {
 
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
@@ -57,6 +57,7 @@ export class UserAdvertsPage {
           let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
           advert._id = element._id;
           if(advert.id_user == this.idUser){
+            this.presentToast(advert.id_user + "  ** " + this.idUser)
             this.advertsList.push(advert);
           }
         });
@@ -77,11 +78,6 @@ export class UserAdvertsPage {
         }
       }
       login(){
-        // if(this.idUser == null){
-        //    this.navCtrl.push(LoginPage);
-        // }else{
-        //   this.navCtrl.push(AccountPage);
-        // }
         this.navCtrl.push(LoginPage);
         
       }
@@ -100,11 +96,13 @@ export class UserAdvertsPage {
           ad: advert
         });
       }
+
       displayAdvert(event, advert){
         this.navCtrl.push(DisplayAdvertPage, {
           ad: advert
         });
       }
+
       deleteAdvert(event, advert){
         let alert = this.alertCtrl.create({
           title: 'Voulez-vous supprimer cette annonce',
@@ -156,6 +154,19 @@ export class UserAdvertsPage {
 
           }
         );
+      }
+      presentToast(message: string) {
+        let toast = this.toastCtrl.create({
+          message: message,
+          duration: 6000,
+          position: 'top'
+        });
+        
+        toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+        });
+    
+        toast.present();
       }
 
 }
