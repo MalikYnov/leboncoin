@@ -35,13 +35,13 @@ export class FormAdvertPage {
   idUser:string;
   errorMessage:string;
   isUpdate:boolean = false;
+  buttonForm:string = "Créer";
   // loadingCtrl:LoadingController
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, public utilsList: UtilsList,
     private photoLibrary: PhotoLibrary, private camera: Camera, private alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private toastCtrl: ToastController,
       private apiService: ApiServiceProvider, private loadingCtrl:LoadingController) {
-        // this.idUser ="5b33b96d113f671da032f676";
-        // this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGlrLmRkQHVvLmNvbSIsIl9pZCI6IjViMzNiOTZkMTEzZjY3MWRhMDMyZjY3NiIsImlhdCI6MTUzMDExNjcwMn0.NqmTt7pF4ypWTmiuU7W31YL3Viyp0VHAwrMDJn0m6dI"
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -57,6 +57,7 @@ export class FormAdvertPage {
 
     if( navParams.get('ad')){
       this.isUpdate = true;
+      this.buttonForm = "Modifier";
       let advert = navParams.get('ad');
       this.pictureURI = advert.img;
       this.advertForm = new FormGroup({
@@ -82,7 +83,6 @@ export class FormAdvertPage {
   addPicture() {
     let alert = this.alertCtrl.create({
       title: 'Choix ce l\'image',
-      // message: 'Do you want to buy this book?',
       buttons: [
         {
           text: 'Choisir une Photo',

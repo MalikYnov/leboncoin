@@ -57,7 +57,7 @@ export class UserAdvertsPage {
         console.log(data);
         data.forEach(element => {
           let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
-          advert.id = element._id;
+          advert._id = element._id;
           if(advert.id_user == this.idUser){
             this.advertsList.push(advert);
           }

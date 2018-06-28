@@ -86,8 +86,8 @@ export class HomePage {
     }else{
       this.navCtrl.push(AccountPage);
     }
-    
   }
+  
   displayAdvert(event, advert){
     this.navCtrl.push(DisplayAdvertPage, {
       ad: advert
