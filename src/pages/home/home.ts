@@ -28,8 +28,8 @@ import { ChatService } from '../../providers/chat-service/chat-service';
 export class HomePage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
-  public idUser:string = "null";
-  public token:string = "null";
+  public idUser:string = "";
+  public token:string = "";
   public zone:any;
   public errorMessage:string;
 
@@ -70,7 +70,7 @@ export class HomePage {
 
   //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert(){
-    if(this.idUser == null){
+    if(this.idUser == ""){
        this.navCtrl.push(LoginPage);
     }else{
       this.navCtrl.push(FormAdvertPage);
