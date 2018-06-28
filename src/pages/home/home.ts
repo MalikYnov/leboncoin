@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 
@@ -35,7 +35,8 @@ export class HomePage {
   public errorMessage:string;
 
 
-  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, public apiService: ApiServiceProvider) {
+  constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, 
+    public apiService: ApiServiceProvider, private toastCtrl: ToastController) {
     this.connect();
     platform.ready().then(() => {
       //   // Okay, so the platform is ready and our plugins are available.
@@ -76,6 +77,7 @@ export class HomePage {
     }
   }
   login(){
+    this.presentToast(this.idUser);
     if(this.idUser == null){
        this.navCtrl.push(LoginPage);
     }else{
@@ -94,6 +96,20 @@ export class HomePage {
     // this.socket.on('connect', (msg) => {
     //   console.log(msg);
     // });
+  }
+
+  presentToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 6000,
+      position: 'top'
+    });
+    
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
 }
