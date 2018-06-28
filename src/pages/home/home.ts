@@ -29,7 +29,7 @@ import * as io from "socket.io-client";
 export class HomePage {
 
   public advertsList: Array<Advert> = new Array<Advert>();
-  public idUser:number = 1;
+  public idUser:string;
   public token:string;
   public socket:any;
   public errorMessage:string;
@@ -37,18 +37,18 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private configUrlApi:ConfigUrlApi, private nativeStorage: NativeStorage, platform: Platform, public apiService: ApiServiceProvider) {
     this.connect();
-    // platform.ready().then(() => {
-    //   //   // Okay, so the platform is ready and our plugins are available.
-    //   //   // Here you can do any higher level native things you might need.
-    //   this.nativeStorage.getItem('user').then(
-    //     (data) => {
-    //       let user = JSON.parse(data);
-    //       this.idUser = user['id'];
-    //       this.token = user['access_token'];
-    //     },
-    //     () => console.log("error")
-    //   );
-    // });
+    platform.ready().then(() => {
+      //   // Okay, so the platform is ready and our plugins are available.
+      //   // Here you can do any higher level native things you might need.
+      this.nativeStorage.getItem('user').then(
+        (data) => {
+          let user = JSON.parse(data);
+          this.idUser = user['id'];
+          this.token = user['access_token'];
+        },
+        () => console.log("error")
+      );
+    });
 
 
      this.apiService.getAllAdverts().subscribe(
@@ -76,12 +76,11 @@ export class HomePage {
     }
   }
   login(){
-    // if(this.idUser == null){
-    //    this.navCtrl.push(LoginPage);
-    // }else{
-    //   this.navCtrl.push(AccountPage);
-    // }
-    this.navCtrl.push(LoginPage);
+    if(this.idUser == null){
+       this.navCtrl.push(LoginPage);
+    }else{
+      this.navCtrl.push(AccountPage);
+    }
     
   }
   displayAdvert(event, advert){
