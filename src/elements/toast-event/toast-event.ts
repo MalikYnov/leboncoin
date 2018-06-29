@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 
 import {ChatService} from '../../providers/chat-service/chat-service';
 /**
@@ -16,14 +16,34 @@ import {ChatService} from '../../providers/chat-service/chat-service';
 })
 export class ToastEventPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private chatService:ChatService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private chatService:ChatService, private toastCtrl:ToastController) {
     this.chatService.listenOnAddAdvert();
-    this.chatService.onAddContact("aa");
+    this.chatService.listenOnAddAdvert().subscribe(
+      (data) => {
+        this.presentToast("Liste d'annonce mise à jours ");
+        console.log(data);
+      },
+      (error) => {
+        this.presentToast(error);
+        console.log(error);
+      }
+      
+   )
     
   }
+ //display a toat with message params
+ presentToast(message: string) {
+  let toast = this.toastCtrl.create({
+    message: message,
+    duration: 3000,
+    position: 'top'
+  });
+  
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ToastEventPage');
-  }
+  toast.present();
+}
 
 }

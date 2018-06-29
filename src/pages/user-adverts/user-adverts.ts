@@ -79,18 +79,11 @@ export class UserAdvertsPage {
     this.navCtrl.push(LoginPage);
   }
 
-   //Log out current User
-   logOut(){
-    let response = this.AuthService.logOut().subscribe(
-      (data)=>{
-        if(data == true){
-          this.presentToast("log Out");
-          this.idUser = null;
-          this.token = null;
-        }
-      },  
-      (error)=>  this.presentToast(error.message)
-    );
+  //Log out current User
+  logOut() {
+    this.AuthService.logOut();
+    this.idUser = null;
+    this.token = null;
   }
 
   //Navigate to display-advert page

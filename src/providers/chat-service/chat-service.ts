@@ -16,7 +16,7 @@ export class ChatService {
   }
   listenOnAddAdvert() {
     let observable = new Observable(observer => {
-      this.socket.on('message', (data) => {
+      this.socket.on('advert', (data) => {
         observer.next(data);
         console.log(data);
       });
