@@ -46,7 +46,7 @@ export class HomePage {
           this.token = user['token'];
         },
         () => {
-          this.presentToast("error")
+          console.log("error")
         }
       );
     });

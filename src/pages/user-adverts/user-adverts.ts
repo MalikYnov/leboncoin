@@ -61,7 +61,7 @@ export class UserAdvertsPage {
         console.log(this.advertsList);
       },
       error => {
-        this.errorMessage = error.error['Message'];
+        this.presentToast(error.error['Message']); 
       }
 
     );

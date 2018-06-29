@@ -32,7 +32,7 @@ export class AccountPage {
   //logOut user
   logOut() {
     this.authService.logOut();
-
+    this.navCtrl.pop();
     this.navCtrl.push(TabsPage);
 
   }
