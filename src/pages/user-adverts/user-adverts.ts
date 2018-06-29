@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, AlertController,LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 
@@ -15,6 +15,8 @@ import { DisplayAdvertPage } from '../display-advert/display-advert';
 //Providers
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
 import { ApiServiceProvider } from '../../providers/api-service/api-service'
+import { ChatService } from '../../providers/chat-service/chat-service';
+
 
 
 @IonicPage()
@@ -31,7 +33,7 @@ export class UserAdvertsPage {
   errorMessage: string;
 
   constructor(public navCtrl: NavController, public utilsList: UtilsList, private nativeStorage: NativeStorage, platform: Platform, private AuthService: AuthServiceProvider,
-    public apiService: ApiServiceProvider, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+    public apiService: ApiServiceProvider, private alertCtrl: AlertController, private toastCtrl: ToastController,private chatService: ChatService, private loadingCtrl: LoadingController) {
 
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
@@ -61,6 +63,33 @@ export class UserAdvertsPage {
       error => {
         this.errorMessage = error.error['Message'];
       }
+
+    );
+
+    this.chatService.listenOnAddAdvert().subscribe(
+      (data) => {
+        let loading = this.loadingCtrl.create({
+          content: 'Patientez...'
+        })
+        loading.present();
+        console.log(data);
+        this.apiService.getAllAdverts(this.token).subscribe(
+          data => {
+            this.advertsList = [];
+            data.forEach(element => {
+              let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
+              advert._id = element._id;
+              this.advertsList.push(advert);
+            });
+            loading.dismiss();
+
+          },
+          error => {
+            this.presentToast(error.error['Message']);
+          }
+        );
+      },
+      (error) => this.presentToast(error)
 
     );
   }
@@ -123,10 +152,6 @@ export class UserAdvertsPage {
       ]
     });
     alert.present();
-
-
-    //todo ajouter le retour:
-
   }
 
   callDeleteService(id) {
