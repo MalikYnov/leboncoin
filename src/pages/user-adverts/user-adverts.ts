@@ -16,6 +16,7 @@ import { DisplayAdvertPage } from '../display-advert/display-advert';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
 import { ApiServiceProvider } from '../../providers/api-service/api-service'
 import { ChatService } from '../../providers/chat-service/chat-service';
+import { HomePage } from '../home/home';
 
 
 
@@ -98,6 +99,10 @@ export class UserAdvertsPage {
     );
   }
 
+  //Go to Home page 
+  goToHome(){
+    this.navCtrl.push(HomePage);
+  }
   //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert() {
     if (this.idUser == "") {
