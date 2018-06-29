@@ -22,6 +22,7 @@ export class ApiServiceProvider {
   getAllAdverts(token:string):Observable<any>{
     
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
+    var token = "JWT " + token;
     header = header.append('x-access-token',token);
     let _options = { headers: header };
     return this.http.get(this.configUrlApi.AdvertUrlApi, _options);
@@ -30,6 +31,7 @@ export class ApiServiceProvider {
   //Post Advert in Mongoose
   postAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
+    var token = "JWT " + token;
     header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
     let _options = { headers: header };
@@ -39,6 +41,7 @@ export class ApiServiceProvider {
   //Put Advert in Mongoose
   PutAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
+    var token = "JWT " + token;    
     header = header.append('x-access-token',token);
     let body = this.serializeObj(advert);
     let _options = { headers: header };
@@ -48,6 +51,7 @@ export class ApiServiceProvider {
   //Delete Advert in Mongoose
   DeleteAdvert(advertId,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
+    var token = "JWT " + token;    
     header = header.append('x-access-token',token);
     let _options = { headers: header };
     return this.http.delete(this.configUrlApi.AdvertUrlApi + '/' + advertId, _options);
