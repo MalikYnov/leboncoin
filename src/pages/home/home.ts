@@ -19,6 +19,7 @@ import { DisplayAdvertPage } from '../display-advert/display-advert';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
 import { ChatService } from '../../providers/chat-service/chat-service';
+import { UserAdvertsPage } from '../user-adverts/user-adverts';
 
 
 @Component({
@@ -114,6 +115,11 @@ export class HomePage {
       this.idUser = null;
       this.token = null;
   }
+
+  myAdverts(){
+    this.navCtrl.push(UserAdvertsPage);
+  }
+  
 
   //Navigate to display-advert page
   displayAdvert(event, advert) {

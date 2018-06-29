@@ -17,7 +17,7 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    this.rootPage = TabsPage;
+    this.rootPage = HomePage;
   }
 
   initializeApp() {
