@@ -17,6 +17,7 @@ import { Advert } from '../../Models/advert';
 
 //Providers
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -182,7 +183,7 @@ export class FormAdvertPage {
                 {
                   text: 'Ok',
                   handler: () => {
-                    this.navCtrl.push(TabsPage);
+                    this.navCtrl.push(HomePage);
                   }
                 },
               ],
@@ -205,7 +206,7 @@ export class FormAdvertPage {
                 {
                   text: 'Ok',
                   handler: () => {
-                    this.navCtrl.push(TabsPage);
+                    this.navCtrl.push(HomePage);
                   }
                 },
               ],
