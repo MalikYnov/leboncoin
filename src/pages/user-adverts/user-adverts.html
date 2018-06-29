@@ -3,12 +3,17 @@
     <ion-title center>Mes Annonces</ion-title>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="addAdvert()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-      <button ion-button icon-only color="royal" (click)="login()">
-        <ion-icon name="person"></ion-icon>
-      </button>
-    </ion-buttons>
+          <ion-icon name="add" ></ion-icon>
+        </button>
+    <button *ngIf="!idUser; else templateButton"ion-button icon-only color="royal" (click)="login()">
+      <ion-icon name="log-in"></ion-icon>
+    </button>
+    <ng-template #templateButton>
+        <button ion-button icon-only color="royal" (click)="logOut()">
+            <ion-icon name="log-out"></ion-icon>
+          </button>
+      </ng-template>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

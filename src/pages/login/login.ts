@@ -36,7 +36,7 @@ export class LoginPage {
 
   constructor(platform: Platform, public navCtrl: NavController, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
-    
+      this.navCtrl.pop();
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
         () => this.navCtrl.push(TabsPage),
@@ -63,7 +63,7 @@ export class LoginPage {
           this.nativeStorage.setItem('user', JSON.stringify(data)).then(
             () => {
               console.log('Stored item!');
-              this.navCtrl.parent.select(1);
+              this.navCtrl.push(TabsPage);
             },
             error => console.error('Error storing item', error)
           );
