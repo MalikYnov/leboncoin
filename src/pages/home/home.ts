@@ -86,6 +86,8 @@ export class HomePage {
   logOut(){
     let response = this.AuthService.logOut().subscribe(
       (data)=>{
+        this.presentToast(data[0]);
+        
         if(data == true){
           this.presentToast("log Out");
           this.idUser = null;
