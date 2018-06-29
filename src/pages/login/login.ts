@@ -63,7 +63,7 @@ export class LoginPage {
           this.nativeStorage.setItem('user', JSON.stringify(data)).then(
             () => {
               console.log('Stored item!');
-              this.navCtrl.push(TabsPage);
+              this.navCtrl.parent.select(1);
             },
             error => console.error('Error storing item', error)
           );

@@ -32,8 +32,8 @@ export class AccountPage {
   //logOut user
   logOut() {
     this.authService.logOut();
-    this.navCtrl.pop();
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.parent.select(1);
+    
 
   }
 
