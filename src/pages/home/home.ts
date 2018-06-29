@@ -97,14 +97,18 @@ export class HomePage {
   //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert() {
     if (this.idUser == "") {
+      this.navCtrl.pop();
       this.navCtrl.push(LoginPage);
+
     } else {
+      this.navCtrl.pop();
       this.navCtrl.push(FormAdvertPage);
     }
   }
 
   //NavigateTo Login-page
   login() {
+    this.navCtrl.pop();
     this.navCtrl.push(LoginPage);
   }
 
@@ -116,12 +120,14 @@ export class HomePage {
   }
 
   myAdverts(){
+    this.navCtrl.pop();
     this.navCtrl.push(UserAdvertsPage);
   }
   
 
   //Navigate to display-advert page
   displayAdvert(event, advert) {
+    this.navCtrl.pop();
     this.navCtrl.push(DisplayAdvertPage, {
       ad: advert
     });

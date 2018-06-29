@@ -18,6 +18,7 @@ export class DisplayAdvertPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
+    
     //Check if get Advert object
     if(navParams.get('ad')){
       this.advert = navParams.get('ad');
