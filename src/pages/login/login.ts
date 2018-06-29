@@ -39,7 +39,7 @@ export class LoginPage {
     
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
-        () => this.navCtrl.push(LoginPage),
+        () => this.navCtrl.push(TabsPage),
         () => console.log('noValabe')
       );
     });
