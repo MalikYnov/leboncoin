@@ -140,7 +140,7 @@ export class UserAdvertsPage {
           text: 'oui',
 
           handler: () => {
-            this.callDeleteService(advert.id);
+            this.callDeleteService(advert._id);
           }
         },
         {
