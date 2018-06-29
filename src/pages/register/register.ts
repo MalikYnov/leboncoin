@@ -33,7 +33,7 @@ export class RegisterPage {
   constructor(platform: Platform, public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
 
-    this.navCtrl.pop();
+
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

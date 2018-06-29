@@ -38,7 +38,6 @@ export class FormAdvertPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private nativeStorage: NativeStorage, platform: Platform, private photoLibrary: PhotoLibrary,
     private camera: Camera, private alertCtrl: AlertController, private toastCtrl: ToastController, private apiService: ApiServiceProvider, private loadingCtrl: LoadingController) {
 
-    this.navCtrl.pop();
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

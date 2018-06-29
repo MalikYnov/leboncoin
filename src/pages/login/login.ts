@@ -36,7 +36,6 @@ export class LoginPage {
 
   constructor(platform: Platform, public navCtrl: NavController, private nativeStorage: NativeStorage,
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
-      this.navCtrl.pop();
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
         () => this.navCtrl.push(TabsPage),
