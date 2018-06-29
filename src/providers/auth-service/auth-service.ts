@@ -32,7 +32,7 @@ export class AuthServiceProvider {
         return this.http.post(this.configUrlApi.RegisternUrlApi, body, _options)
     }
 
-    logout(): boolean {
+    logOut(): Observable<boolean> {
         this.nativeStorage.remove('user').then(
             () => {
                 return true
@@ -42,7 +42,7 @@ export class AuthServiceProvider {
             }
         );
 
-        return false;
+        return null;
 
     }
     private serializeObj(obj) {

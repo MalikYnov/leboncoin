@@ -18,6 +18,8 @@ export class ToastEventPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private chatService:ChatService) {
     this.chatService.listenOnAddAdvert();
+    this.chatService.onAddContact("aa");
+    
   }
 
   ionViewDidLoad() {

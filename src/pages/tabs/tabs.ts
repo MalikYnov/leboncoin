@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccountPage } from '../account/account';
 import {UserAdvertsPage } from '../user-adverts/user-adverts'
+import {ToastEventPage } from '../../elements/toast-event/toast-event'
 
 
 @IonicPage()
@@ -16,6 +17,6 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = UserAdvertsPage;
-  tab3Root = AccountPage;
+  tab3Root = ToastEventPage;
 
 }

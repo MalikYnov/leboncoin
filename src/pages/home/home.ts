@@ -70,7 +70,7 @@ export class HomePage {
 
   //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert(){
-    if(this.idUser == ""){
+    if(this.idUser == "" ){
        this.navCtrl.push(LoginPage);
     }else{
       this.navCtrl.push(FormAdvertPage);
@@ -84,12 +84,16 @@ export class HomePage {
 
   //Log out current User
   logOut(){
-    var response = this.AuthService.logout();
-    if(response){
-      this.presentToast("log Out");
-      this.idUser = null;
-      this.token = null;
-    }
+    let response = this.AuthService.logOut().subscribe(
+      (data)=>{
+        if(data == true){
+          this.presentToast("log Out");
+          this.idUser = null;
+          this.token = null;
+        }
+      },  
+      (error)=>  this.presentToast(error.message)
+    );
   }
 
   //Navigate to display-advert page

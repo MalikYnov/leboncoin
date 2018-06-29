@@ -31,7 +31,7 @@ export class AccountPage {
   
   //logOut user
   logOut() {
-    var response = this.authService.logout();
+    var response = this.authService.logOut();
      if(response){
        this.navCtrl.push(TabsPage);
      }

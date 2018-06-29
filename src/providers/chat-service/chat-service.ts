@@ -12,11 +12,11 @@ export class ChatService {
 
 
   onAddContact(contact) {
-    this.socket.emit('add-contact', "ffff");
+    this.socket.emit('message', "ffff");
   }
   listenOnAddAdvert() {
     let observable = new Observable(observer => {
-      this.socket.on('myEvent', (data) => {
+      this.socket.on('message', (data) => {
         observer.next(data);
         console.log(data);
       });
