@@ -12,12 +12,10 @@ import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import {DisplayAdvertPage } from '../pages/display-advert/display-advert';
 import { FormAdvertPage } from '../pages/form-advert/form-advert';
-import { AccountPage } from '../pages/account/account';
 import { UserAdvertsPage } from '../pages/user-adverts/user-adverts';
 import { ToastEventPage } from '../elements/toast-event/toast-event';
 
@@ -39,11 +37,9 @@ const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} }
   declarations: [
     MyApp,
     HomePage,
-    TabsPage,
     LoginPage,
     DisplayAdvertPage,
     FormAdvertPage,
-    AccountPage,
     RegisterPage,
     UserAdvertsPage,
     ToastEventPage
@@ -58,11 +54,9 @@ const config: SocketIoConfig = { url: 'wss://echo.websocket.org/', options: {} }
   entryComponents: [
     MyApp,
     HomePage,
-    TabsPage,
     LoginPage,
     DisplayAdvertPage,
     FormAdvertPage,
-    AccountPage,
     RegisterPage,
     UserAdvertsPage,
     ToastEventPage

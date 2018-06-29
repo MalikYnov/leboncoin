@@ -9,7 +9,6 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service'
 
 //page
 import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
 import { User } from '../../Models/user';
 /**
  * Generated class for the RegisterPage page.

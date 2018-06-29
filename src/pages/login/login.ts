@@ -10,7 +10,6 @@ import {ApiServiceProvider} from '../../providers/api-service/api-service'
 
 //page
 import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 
 
@@ -38,7 +37,7 @@ export class LoginPage {
     private _authService: AuthServiceProvider, public apiService: ApiServiceProvider) {
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
-        () => this.navCtrl.push(TabsPage),
+        () => this.navCtrl.push(HomePage),
         () => console.log('noValabe')
       );
     });

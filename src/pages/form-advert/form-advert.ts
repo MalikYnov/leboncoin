@@ -10,7 +10,6 @@ import { Camera } from '@ionic-native/camera';
 
 //Pages
 import { LoginPage } from '../login/login';
-import { TabsPage } from '../tabs/tabs';
 
 //Models
 import { Advert } from '../../Models/advert';
