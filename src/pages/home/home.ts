@@ -72,25 +72,25 @@ export class HomePage {
           content: 'Patientez...'
         })
         loading.present();
-        console.log(data);
         this.apiService.getAllAdverts(this.token).subscribe(
           data => {
+            loading.dismiss();
             this.advertsList = [];
             data.forEach(element => {
               let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
               advert._id = element._id;
               this.advertsList.push(advert);
             });
-            loading.dismiss();
 
           },
           error => {
+            loading.dismiss();
             this.presentToast(error.error['Message']);
           }
         );
+        
       },
       (error) => this.presentToast(error)
-
     );
   }
 

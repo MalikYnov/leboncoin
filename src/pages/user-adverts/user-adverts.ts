@@ -75,16 +75,20 @@ export class UserAdvertsPage {
         console.log(data);
         this.apiService.getAllAdverts(this.token).subscribe(
           data => {
+            loading.dismiss();
             this.advertsList = [];
             data.forEach(element => {
               let advert = new Advert(element.title, element.img, element.price, element.description, element.localisation, element.id_user);
               advert._id = element._id;
-              this.advertsList.push(advert);
+              if (advert.id_user == this.idUser) {
+                this.advertsList.push(advert);
+              }
             });
-            loading.dismiss();
+            console.log(this.advertsList);
 
           },
           error => {
+            loading.dismiss();
             this.presentToast(error.error['Message']);
           }
         );
@@ -156,27 +160,8 @@ export class UserAdvertsPage {
 
   callDeleteService(id) {
     this.apiService.DeleteAdvert(id, this.token).subscribe(
-      data => {
-        if (data['value'] == true) {
-          let alert = this.alertCtrl.create({
-            title: 'annonce supprimée',
-            subTitle: 'Succès',
-            buttons: ['Ok']
-          });
-          alert.present();
-        } else {
-
-          let alert = this.alertCtrl.create({
-            title: 'annonce supprimée',
-            subTitle: 'une erreur c\'est produite',
-            buttons: ['Ok']
-          });
-          alert.present();
-        }
-      },
-      error => {
-
-      }
+      (data) => console.log(data),
+      (error) => console.log(error)
     );
   }
 
