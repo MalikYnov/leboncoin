@@ -12,7 +12,6 @@ import { Advert } from '../../Models/advert';
 //Pages
 import { LoginPage } from '../login/login';
 import { FormAdvertPage } from '../form-advert/form-advert';
-import { AccountPage } from '../account/account';
 import { DisplayAdvertPage } from '../display-advert/display-advert';
 
 //Providers
