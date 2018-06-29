@@ -119,18 +119,24 @@ export class FormAdvertPage {
   //open gallery and get picture
 
   openGallery() {
-    this.photoLibrary.requestAuthorization().then(() => {
-      this.photoLibrary.getLibrary().subscribe({
-        next: library => {
-          library.forEach(function(libraryItem) {
-          this.pictureURI = 'data:image/jpeg;base64,' + libraryItem.photoURL;
-          });
-        },
-        error: err => { console.log('could not get photos'); },
-        complete: () => { console.log('done getting photos'); }
-      });
-    })
-  }
+
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL,
+        allowEdit: true,
+        quality: 100,
+        targetWidth: 350,
+        targetHeight: 350,
+        sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+      }).then((imageData) => {
+        this.pictureURI = imageData;
+        this.pictureURI = 'data:image/jpeg;base64,' + imageData;
+  
+  
+      },
+        (err) => {
+          console.log(err);
+        });
+    }
 
   //delete picture of form
   deletePicture() {

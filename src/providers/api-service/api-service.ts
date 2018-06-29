@@ -23,7 +23,7 @@ export class ApiServiceProvider {
     
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     var token = "JWT " + token;
-    header = header.append('x-access-token',token);
+    header = header.append('Authorization',token);
     let _options = { headers: header };
     return this.http.get(this.configUrlApi.AdvertUrlApi, _options);
   }
@@ -32,7 +32,7 @@ export class ApiServiceProvider {
   postAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     var token = "JWT " + token;
-    header = header.append('x-access-token',token);
+    header = header.append('Authorization',token);
     let body = this.serializeObj(advert);
     let _options = { headers: header };
     return this.http.post(this.configUrlApi.AdvertUrlApi, body ,_options)
@@ -42,7 +42,7 @@ export class ApiServiceProvider {
   PutAdvert(advert:Advert,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     var token = "JWT " + token;    
-    header = header.append('x-access-token',token);
+    header = header.append('Authorization',token);
     let body = this.serializeObj(advert);
     let _options = { headers: header };
     return this.http.put(this.configUrlApi.AdvertUrlApi + '/' + advert._id, body ,_options)
@@ -52,7 +52,7 @@ export class ApiServiceProvider {
   DeleteAdvert(advertId,token:string):Observable<any>{
     let header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' });
     var token = "JWT " + token;    
-    header = header.append('x-access-token',token);
+    header = header.append('Authorization',token);
     let _options = { headers: header };
     return this.http.delete(this.configUrlApi.AdvertUrlApi + '/' + advertId, _options);
   }
