@@ -42,7 +42,7 @@ export class UserAdvertsPage {
           this.idUser = user['id_user'];
           this.token = user['token'];
         },
-        () => console.log("error")
+        (error) => this.navCtrl.push(LoginPage)
       );
     });
 
@@ -96,7 +96,7 @@ export class UserAdvertsPage {
 
   //NavigateTo forms Page, if iser is login, else it navigate to login-page
   addAdvert() {
-    if (this.idUser == null) {
+    if (this.idUser == "") {
       this.navCtrl.push(LoginPage);
     } else {
       this.navCtrl.push(FormAdvertPage);
