@@ -7,7 +7,7 @@ import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
 
 //Providers
-import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
 
 
 @IonicPage()
@@ -16,9 +16,9 @@ import {AuthServiceProvider} from '../../providers/auth-service/auth-service'
   templateUrl: 'account.html',
 })
 export class AccountPage {
-  user:any;
+  user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform:Platform, public nativeStorage:NativeStorage, public authService:AuthServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public nativeStorage: NativeStorage, public authService: AuthServiceProvider) {
     platform.ready().then(() => {
       this.nativeStorage.getItem('user').then(
         (data) => {
@@ -28,13 +28,13 @@ export class AccountPage {
       );
     });
   }
-  
+
   //logOut user
   logOut() {
-    var response = this.authService.logOut();
-     if(response){
-       this.navCtrl.push(TabsPage);
-     }
+    this.authService.logOut();
+
+    this.navCtrl.push(TabsPage);
+
   }
 
 }
